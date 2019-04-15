@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles.scss';
+import c from '@/const';
+import {log} from '@/utils';
 
 import Feed from '@/components/Feed';
 import Inventory from '@/components/Inventory';
@@ -10,9 +12,13 @@ export default class Loop extends React.Component {
   constructor(props) {
     super(props);
 
+    this.inventory = React.createRef();
+    this.interface = React.createRef();
+    this.feed = React.createRef();
+
     this.state = {
-      running: false,
-      delta: 100
+      running: true,
+      delta: c.delta
     }
 
     this.tick = this.tick.bind(this);
@@ -24,16 +30,20 @@ export default class Loop extends React.Component {
 
   tick() {
     if (this.state.running) {
-      console.log('Tick');
+      log('Tick');
+
+      this.inventory.current.tick();
+      this.interface.current.tick();
+      this.feed.current.tick();
     }
   }
 
   render() {
     return (
       <div id="screen" className="full">
-        <Inventory/>
-        <Interface/>
-        <Feed/>
+        <Inventory ref={this.inventory}/>
+        <Interface ref={this.interface}/>
+        <Feed ref={this.feed}/>
       </div>
     );
   }

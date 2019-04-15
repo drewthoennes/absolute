@@ -1,0 +1,25 @@
+.cooldown-button {
+  position: relative;
+  width: 120px;
+  height: 50px;
+  background: blue;
+
+  .cooldown {
+    height: 100%;
+    background: red;
+  }
+
+  .cooldown-active {
+
+  }
+
+  .cooldown-disabled {
+    
+  }
+
+  p {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+  }
+}

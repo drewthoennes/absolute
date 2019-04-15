@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles.scss';
+import {log} from '@/utils';
 
 export default class Inventory extends React.Component {
   constructor(props) {
@@ -47,9 +48,13 @@ export default class Inventory extends React.Component {
       // setInterval(() => this.incrementWood(1), 1000);
   }
 
+  tick() {
+    log('Inventory tick');
+  }
+
   incrementWood(val) {
     this.setState({wood: this.state.wood + val});
-    console.log(this.state.wood);
+    log(this.state.wood);
   }
 
   render() {

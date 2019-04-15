@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles.scss';
+import {log} from '@/utils';
 
 export default class Feed extends React.Component {
   constructor(props) {
@@ -10,6 +11,11 @@ export default class Feed extends React.Component {
 
     }
   }
+
+  tick() {
+    log('Feed tick');
+  }
+
   render() {
     return (
       <div id="feed">
