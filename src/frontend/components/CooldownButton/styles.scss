@@ -2,19 +2,11 @@
   position: relative;
   width: 120px;
   height: 50px;
-  background: blue;
+  border: 1px solid black;
 
   .cooldown {
     height: 100%;
-    background: red;
-  }
-
-  .cooldown-active {
-
-  }
-
-  .cooldown-disabled {
-    
+    background: #cccccc;
   }
 
   p {
@@ -22,4 +14,12 @@
     width: 100%;
     text-align: center;
   }
+}
+
+.cooldown-enabled {
+  cursor: pointer;
+}
+
+.cooldown-disabled {
+  cursor: default;
 }

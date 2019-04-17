@@ -6,4 +6,8 @@
     flex-direction: row;
     justify-content: space-between;
   }
+
+  .area-unselected:hover {
+    cursor: pointer;
+  }
 }

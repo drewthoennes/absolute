@@ -8,11 +8,14 @@ export default class CooldownButton extends React.Component {
   constructor(props) {
     super(props);
 
+    this.cooldownClicked = this.cooldownClicked.bind(this);
+
     this.state = {
       initial: 1,
       remaining: 0,
       decrementing: false,
-      width: 0
+      width: 0,
+      buttonClass: 'cooldown-enabled'
     }
   }
 
@@ -34,7 +37,8 @@ export default class CooldownButton extends React.Component {
           initial: 1,
           remaining: 0,
           width: 0,
-          decrementing: false
+          decrementing: false,
+          buttonClass: 'cooldown-enabled'
         });
       }
     }
@@ -46,15 +50,26 @@ export default class CooldownButton extends React.Component {
       initial: time,
       remaining: time,
       width: 100,
-      decrementing: true
+      decrementing: true,
+      buttonClass: 'cooldown-disabled'
     });
   }
 
+  cooldownClicked() {
+    if (this.state.decrementing) {
+      return;
+    }
+
+    this.startCooldown(this.props.cooldown);
+    this.props.cb();
+  }
+
   render() {
+
     return (
-      <div className="cooldown-button">
+      <div className={"cooldown-button " + this.state.buttonClass} onClick={() => this.cooldownClicked()}>
         <p>{this.props.text}</p>
-        <div className={"cooldown"} style={{width: this.state.width + '%'}}>
+        <div className="cooldown" style={{width: this.state.width + '%'}}>
         </div>
       </div>
     );
@@ -62,5 +77,9 @@ export default class CooldownButton extends React.Component {
 };
 
 CooldownButton.defaultProps = {
-  text: 'Sample text'
+  text: 'Sample text',
+  cooldown: 5000,
+  cb: () => {
+    console.log('Error: CooldownButton does not have a callback')
+  }
 }

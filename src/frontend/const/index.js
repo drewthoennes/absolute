@@ -1,4 +1,4 @@
 module.exports = {
-  delta: 1000,
+  delta: 500,
   log: false
 }
