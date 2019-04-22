@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './styles.scss';
 import c from '@/const';
 import {log} from '@/utils';
+import {tick} from '@/dialogue';
 
 import Feed from '@/components/Feed';
 import Inventory from '@/components/Inventory';
@@ -33,15 +34,16 @@ export default class Loop extends React.Component {
 
       this.interface.current.tick();
       this.feed.current.tick();
+      tick();
     }
   }
 
   render() {
     return (
       <div id="screen" className="full">
-        <Inventory/>
-        <Interface ref={this.interface}/>
         <Feed ref={this.feed}/>
+        <Interface ref={this.interface}/>
+        <Inventory/>
       </div>
     );
   }
