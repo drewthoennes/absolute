@@ -25,7 +25,14 @@ export default class Interface extends React.Component {
 
   tick() {
     log('Interface tick');
-    this.darkWoods.current.tick();
+
+    switch (this.state.area) {
+      case 'Dark Woods':
+        this.darkWoods.current.tick();
+        break;
+      default:
+        log('Interface: No area to tick');
+    }
   }
 
   setArea(area) {
