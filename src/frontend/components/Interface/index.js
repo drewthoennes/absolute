@@ -42,12 +42,25 @@ export default class Interface extends React.Component {
       (area === this.state.area) ? <p className="area-selected" key={area}><u>{area}</u></p> : <p className="area-unselected" onClick={() => this.setArea(area)} key={area}>{area}</p>
     );
 
+    let area;
+    if (this.state.area === 'Dark Woods') {
+      area = (
+        <DarkWoods ref={this.darkWoods}/>
+      );
+    }
+    else if (this.state.area === 'Abandoned Mine') {
+      area = '';
+    }
+    else if (this.state.area === 'Trading Post') {
+      area = '';
+    }
+
     return (
       <div id="interface">
         <div className="areas">
           {unlocked}
         </div>
-        <DarkWoods ref={this.darkWoods}/>
+        {area}
       </div>
     );
   }

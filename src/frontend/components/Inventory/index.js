@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {connect} from 'react-redux';
 import './styles.scss';
 import {log} from '@/utils';
+import store from '@/store';
+import {incWood} from '@/store/actions';
 
 export default class Inventory extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      unlocked: ['wood', 'fur'],
+      unlocked: ['wood'],
       items: {
         wood: {
           quantity: 0
@@ -36,25 +39,17 @@ export default class Inventory extends React.Component {
             hide: [3]
           }
         }
-      },
-      wood: 0,
-      trap: 0,
-      fur: 0,
-      claw: 0
+      }
     }
   }
 
   componentDidMount() {
-      // setInterval(() => this.incrementWood(1), 1000);
+      // store.subscribe(() => console.log(store.getState()));
+      // store.dispatch(incWood(3));
   }
 
   tick() {
     log('Inventory tick');
-  }
-
-  incrementWood(val) {
-    this.setState({wood: this.state.wood + val});
-    log(this.state.wood);
   }
 
   render() {
