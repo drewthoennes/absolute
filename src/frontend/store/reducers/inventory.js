@@ -50,7 +50,12 @@ const inventory = (state = initialState, action) => {
 
     case INC_WOOD:
       if (!action.val) {
-        console.log('Error (INC_WOOD): Missing increment value');
+        return Object.assign({}, state, {
+          wood: {
+            quantity: state.wood.quantity + Math.floor(Math.random() * 5) + 3,
+            visible: state.wood.visible
+          }
+        });
       }
       return Object.assign({}, state, {
         wood: {
@@ -66,7 +71,7 @@ const inventory = (state = initialState, action) => {
       return Object.assign({}, state, {
         wood: (state.wood.quantity - action.val < 0) ? 0 : state.wood.quantity - action.val
       });
-      
+
     default:
       return state
   }
