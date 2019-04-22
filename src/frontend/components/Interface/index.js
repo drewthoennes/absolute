@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './styles.scss';
 import c from '@/const';
 import {log} from '@/utils';
+import store from '@/store';
+import {updateDarkWoods} from '@/store/actions';
 
 import CooldownButton from '@/components/CooldownButton';
 import DarkWoods from '@/components/Interface/DarkWoods'
@@ -15,7 +17,8 @@ export default class Interface extends React.Component {
 
     this.state = {
       areas: ['Dark Woods', 'Abandoned Mine', 'Trading Post'],
-      area: 'Dark Woods'
+      area: 'Dark Woods',
+      data: {}
     }
   }
 
@@ -26,9 +29,10 @@ export default class Interface extends React.Component {
   tick() {
     log('Interface tick');
 
+    let state = {};
     switch (this.state.area) {
       case 'Dark Woods':
-        this.darkWoods.current.tick();
+        this.setState({data: this.darkWoods.current.tick()});
         break;
       default:
         log('Interface: No area to tick');
@@ -36,8 +40,28 @@ export default class Interface extends React.Component {
   }
 
   setArea(area) {
-    this.setState({area: area});
-    log(this.state.area);
+    if (this.state.area == 'Dark Woods') {
+      store.dispatch(updateDarkWoods(this.state.data));
+      console.log('Updated Dark Woods');
+    }
+    else if (this.state.area == 'Abandoned Mine') {
+      // Update Abandoned Mine
+    }
+    else if (this.state.areas == 'Trading Post') {
+      // Updating Trading Post
+    }
+
+    this.setState({area: area}, () => {
+      if (this.state.area == 'Dark Woods') {
+        this.darkWoods.current.init(store.getState().areas.darkWoods);
+      }
+      else if (this.state.area == 'Abandoned Mine') {
+        // Update Abandoned Mine
+      }
+      else if (this.state.areas == 'Trading Post') {
+        // Updating Trading Post
+      }
+    });
   }
 
   cooldownFunction() {
@@ -45,7 +69,20 @@ export default class Interface extends React.Component {
   }
 
   render() {
-    let unlocked = this.state.areas.map(area =>
+    let unlocked = [];
+    let areas = store.getState().areas;
+
+    if (areas.darkWoods.enabled) {
+      unlocked.push('Dark Woods');
+    }
+    if (areas.abandonedMine.enabled) {
+      unlocked.push('Abandoned Mine');
+    }
+    if (areas.tradingPost.enabled) {
+      unlocked.push('Trading Post');
+    }
+
+    unlocked = unlocked.map(area =>
       (area === this.state.area) ? <p className="area-selected" key={area}><u>{area}</u></p> : <p className="area-unselected" onClick={() => this.setArea(area)} key={area}>{area}</p>
     );
 

@@ -1,5 +1,5 @@
 import store from '@/store';
-import {addLine} from '@/store/actions';
+import {addLine, enableFire} from '@/store/actions';
 import {getTimeElapsed} from '@/utils';
 
 let events = {
@@ -28,6 +28,7 @@ function tick() {
   if (events.fireEnable && !events.fireEnable.done && ready(inventory, events.fireEnable.requirements)) {
     console.log('Enable fire');
     store.dispatch(addLine(events.fireEnable.line, getTimeElapsed()));
+    store.dispatch(enableFire());
     delete events.fireEnable;
   }
 }
