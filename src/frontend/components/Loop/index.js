@@ -12,7 +12,6 @@ export default class Loop extends React.Component {
   constructor(props) {
     super(props);
 
-    this.inventory = React.createRef();
     this.interface = React.createRef();
     this.feed = React.createRef();
 
@@ -32,7 +31,6 @@ export default class Loop extends React.Component {
     if (this.state.running) {
       log('Tick');
 
-      this.inventory.current.tick();
       this.interface.current.tick();
       this.feed.current.tick();
     }
@@ -41,7 +39,7 @@ export default class Loop extends React.Component {
   render() {
     return (
       <div id="screen" className="full">
-        <Inventory ref={this.inventory}/>
+        <Inventory/>
         <Interface ref={this.interface}/>
         <Feed ref={this.feed}/>
       </div>

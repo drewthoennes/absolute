@@ -1,7 +1,5 @@
-let store = require('@/const/store');
-
 module.exports = {
-  store: store,
-  delta: 500,
-  log: false
+  delta: 250,
+  log: false,
+  dark: false
 }
