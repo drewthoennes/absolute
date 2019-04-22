@@ -1,73 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles.scss';
-import {log} from '@/utils';
+import {connect} from 'react-redux';
+import InventoryComponent from './inventory';
 
-export default class Inventory extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      unlocked: ['wood', 'fur'],
-      items: {
-        wood: {
-          quantity: 0
-        },
-        fur: {
-          quantity: 0
-        },
-        claw: {
-          quantity: 0
-        },
-        hide: {
-          quantity: 0
-        },
-        trap: {
-          quantity: 0,
-          cost: {
-            wood: [10, 20, 30, 60, 100]
-          }
-        },
-        dagger: {
-          quantity: 0,
-          cost: {
-            wood: [10],
-            claws: [5],
-            hide: [3]
-          }
-        }
-      },
-      wood: 0,
-      trap: 0,
-      fur: 0,
-      claw: 0
-    }
+const mapStateToProps = state => {
+  return {
+    wood: state.inventory.wood,
+    furs: state.inventory.furs,
+    claws: state.inventory.claws,
+    hides: state.inventory.hides,
+    traps: state.inventory.traps,
+    daggers: state.inventory.daggers
   }
+}
 
-  componentDidMount() {
-      // setInterval(() => this.incrementWood(1), 1000);
-  }
+const Inventory = connect(mapStateToProps)(InventoryComponent);
 
-  tick() {
-    log('Inventory tick');
-  }
-
-  incrementWood(val) {
-    this.setState({wood: this.state.wood + val});
-    log(this.state.wood);
-  }
-
-  render() {
-    const materials = this.state.unlocked.map(item =>
-      <p key={item}>{item}: {this.state[item]}</p>
-    );
-
-    return (
-      <div id="inventory">
-        <div id="materials">
-          {materials}
-        </div>
-      </div>
-    );
-  }
-};
+export default Inventory;

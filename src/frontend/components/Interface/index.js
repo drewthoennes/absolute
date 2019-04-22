@@ -5,44 +5,62 @@ import c from '@/const';
 import {log} from '@/utils';
 
 import CooldownButton from '@/components/CooldownButton';
+import DarkWoods from '@/components/Interface/DarkWoods'
 
 export default class Interface extends React.Component {
   constructor(props) {
     super(props);
 
-    this.cooldown = React.createRef();
+    this.darkWoods = React.createRef();
 
     this.state = {
+      areas: ['Dark Woods', 'Abandoned Mine', 'Trading Post'],
       area: 'Dark Woods'
     }
   }
 
   componentDidMount() {
     log('Interface mounted');
-    //setInterval(this.cooldown.current.startCooldown(3000), 5000);
-    //this.cooldown.current.startCooldown(5000);
   }
 
   tick() {
     log('Interface tick');
-    this.cooldown.current.tick();
+
+    switch (this.state.area) {
+      case 'Dark Woods':
+        this.darkWoods.current.tick();
+        break;
+      default:
+        log('Interface: No area to tick');
+    }
   }
 
   setArea(area) {
     this.setState({area: area});
-    log(area);
+    log(this.state.area);
+  }
+
+  cooldownFunction() {
+    console.log('CooldownButton clicked!');
   }
 
   render() {
-    let areas = ['Dark Woods', 'Abandoned Mine', 'Trading Post'];
-    const unlocked = areas.map((area) =>
-      (area === this.state.area) ? <p key={area}><u>{area}</u></p> : <p onClick={() => this.setArea({area})} key={area}>{area}</p>
+    let unlocked = this.state.areas.map(area =>
+      (area === this.state.area) ? <p className="area-selected" key={area}><u>{area}</u></p> : <p className="area-unselected" onClick={() => this.setArea(area)} key={area}>{area}</p>
     );
 
-    let selected = (
-      <CooldownButton ref={this.cooldown} text="Click me!"/>
-      
-    );
+    let area;
+    if (this.state.area === 'Dark Woods') {
+      area = (
+        <DarkWoods ref={this.darkWoods}/>
+      );
+    }
+    else if (this.state.area === 'Abandoned Mine') {
+      area = '';
+    }
+    else if (this.state.area === 'Trading Post') {
+      area = '';
+    }
 
     
 
@@ -51,8 +69,7 @@ export default class Interface extends React.Component {
         <div className="areas">
           {unlocked}
         </div>
-        {selected}
-        {selected}
+        {area}
       </div>
     );
   }

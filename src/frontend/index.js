@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '@/components/App'
+import { Provider } from 'react-redux';
+import App from '@/components/App';
+import store from '@/store';
+import './styles.scss';
 
 import Game from '@/pages/Game'
 
 ReactDOM.render((
-  <div className="full">
+  <Provider store={store}>
     <App/>
-  </div>
+  </Provider>
 ), document.getElementById('app'));
