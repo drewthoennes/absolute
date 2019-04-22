@@ -4,6 +4,7 @@ import './styles.scss';
 import {log, getTimeElapsed} from '@/utils';
 import store from '@/store';
 import {deleteLines} from '@/store/actions';
+import {tick} from './events';
 
 export default class Feed extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ export default class Feed extends React.Component {
   }
 
   tick() {
-    log('Feed tick');
+    tick();
     this.printLines();
   }
 
@@ -31,18 +32,16 @@ export default class Feed extends React.Component {
     store.dispatch(deleteLines(time));
 
     if (lines) {
-      console.log(time + ": " + lines.toString());
+      log(time + ": " + lines.toString());
 
       let concat = this.state.lines.reverse().concat(lines).reverse();
       this.setState({
         lines: concat
       });
-      console.log(this.state.lines);
     }
   }
 
   render() {
-    console.log('Render');
     let lines = this.state.lines.map(line =>
       <p key={line}>{line}</p>
     );

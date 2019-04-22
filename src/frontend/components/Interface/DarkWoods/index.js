@@ -12,7 +12,7 @@ export default class DarkWoods extends React.Component {
   constructor(props) {
     super(props);
 
-    this.cooldown = React.createRef();
+    this.gatherWoodButton = React.createRef();
 
     this.state = {
       area: 'Dark Woods'
@@ -24,16 +24,16 @@ export default class DarkWoods extends React.Component {
   }
 
   tick() {
-    this.cooldown.current.tick();
+    this.gatherWoodButton.current.tick();
   }
 
   gatherWood() {
-    store.dispatch(incWood(3));
+    store.dispatch(incWood());
   }
 
   render() {
     let selected = (
-      <CooldownButton ref={this.cooldown} text="Gather wood" cb={this.gatherWood}/>
+      <CooldownButton ref={this.gatherWoodButton} text="Gather wood" cb={this.gatherWood}/>
     );
 
     return (
