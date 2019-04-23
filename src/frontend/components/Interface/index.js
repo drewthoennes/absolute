@@ -8,15 +8,17 @@ import {updateDarkWoods} from '@/store/actions';
 
 import CooldownButton from '@/components/CooldownButton';
 import DarkWoods from '@/components/Interface/DarkWoods'
+import StonyPath from '@/components/Interface/StonyPath';
 
 export default class Interface extends React.Component {
   constructor(props) {
     super(props);
 
     this.darkWoods = React.createRef();
+    this.stonyPath = React.createRef();
 
     this.state = {
-      areas: ['Dark Woods', 'Abandoned Mine', 'Trading Post'],
+      areas: ['Dark Woods', 'Stony Path', 'Abandoned Mine', 'Trading Post'],
       area: 'Dark Woods',
       data: {}
     }
@@ -34,6 +36,11 @@ export default class Interface extends React.Component {
       case 'Dark Woods':
         this.setState({data: this.darkWoods.current.tick()});
         break;
+
+      case 'Stony Path':
+        this.setState({data: this.stonyPath.current.tick()});
+        break;
+
       default:
         log('Interface: No area to tick');
     }
@@ -42,7 +49,9 @@ export default class Interface extends React.Component {
   setArea(area) {
     if (this.state.area == 'Dark Woods') {
       store.dispatch(updateDarkWoods(this.state.data));
-      console.log('Updated Dark Woods');
+    }
+    else if (this.state.area == 'Stony Path') {
+      // Update Stony Path
     }
     else if (this.state.area == 'Abandoned Mine') {
       // Update Abandoned Mine
@@ -55,6 +64,9 @@ export default class Interface extends React.Component {
       if (this.state.area == 'Dark Woods') {
         this.darkWoods.current.init(store.getState().areas.darkWoods);
       }
+      else if (this.state.area == 'Stony Path') {
+        // Update Stony Path
+      }
       else if (this.state.area == 'Abandoned Mine') {
         // Update Abandoned Mine
       }
@@ -64,16 +76,15 @@ export default class Interface extends React.Component {
     });
   }
 
-  cooldownFunction() {
-    console.log('CooldownButton clicked!');
-  }
-
   render() {
     let unlocked = [];
     let areas = store.getState().areas;
 
     if (areas.darkWoods.enabled) {
       unlocked.push('Dark Woods');
+    }
+    if (areas.stonyPath.enabled) {
+      unlocked.push('Stony Path');
     }
     if (areas.abandonedMine.enabled) {
       unlocked.push('Abandoned Mine');
@@ -90,6 +101,11 @@ export default class Interface extends React.Component {
     if (this.state.area === 'Dark Woods') {
       area = (
         <DarkWoods ref={this.darkWoods}/>
+      );
+    }
+    else if (this.state.area === 'Stony Path') {
+      area = (
+        <StonyPath ref={this.stonyPath}/>
       );
     }
     else if (this.state.area === 'Abandoned Mine') {

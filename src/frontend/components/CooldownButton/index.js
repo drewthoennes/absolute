@@ -47,10 +47,8 @@ export default class CooldownButton extends React.Component {
   }
 
   init(data, time) {
-    console.log(data);
-
     let duration = (new Date().getTime()) - time;
-    console.log('Duration was ' + duration);
+    log('Duration was ' + duration);
     data.remaining -= duration;
 
     if (data <= 0) {
@@ -66,7 +64,7 @@ export default class CooldownButton extends React.Component {
       this.setState({
         initial: data.initial,
         remaining: data.remaining,
-        width: 0,        
+        width: 0,
         decrementing: data.decrementing,
         buttonClass: 'cooldown-disabled'
       });
@@ -85,7 +83,7 @@ export default class CooldownButton extends React.Component {
   }
 
   cooldownClicked() {
-    if (this.state.decrementing) {
+    if (this.state.decrementing || !this.props.enabled) {
       return;
     }
 
@@ -94,9 +92,16 @@ export default class CooldownButton extends React.Component {
   }
 
   render() {
+    let enabled = this.state.buttonClass;
+    if (!this.props.enabled) {
+      enabled = 'cooldown-disabled';
+    }
+
     return (
-      <div className={"cooldown-button " + this.state.buttonClass} onClick={() => this.cooldownClicked()}>
-        <p>{this.props.text}</p>
+      <div tooltip={this.props.tooltip == "" ? undefined : this.props.tooltip} className={"cooldown-button " + enabled} onClick={() => this.cooldownClicked()}>
+        <div className="cooldown-button-text">
+          <p>{this.props.text}</p>
+        </div>
         <div className="cooldown" style={{width: this.state.width + '%'}}>
         </div>
       </div>
@@ -106,8 +111,10 @@ export default class CooldownButton extends React.Component {
 
 CooldownButton.defaultProps = {
   text: 'Sample text',
+  tooltip: undefined,
   cooldown: 5000,
+  enabled: true,
   cb: () => {
-    console.log('Error: CooldownButton does not have a callback')
+    log('Error: CooldownButton does not have a callback')
   }
 }

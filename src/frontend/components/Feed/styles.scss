@@ -5,7 +5,9 @@
   justify-content: center;
 
   #lines {
+    width: 80%;
     margin-top: 16px;
+    
     p {
       margin: 0px;
       padding-bottom: 10px;
@@ -16,14 +18,5 @@
       -o-animation: fadein 1s;
       animation: fadein 1s;
     }
-  }
-}
-
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }

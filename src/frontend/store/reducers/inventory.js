@@ -1,25 +1,13 @@
+import {getCost} from '@/utils';
 import {
   GET_WOOD,
   INC_WOOD,
   DEC_WOOD,
-  EN_FIRE
+  EN_FIRE,
+  EN_TRAPS,
+  INC_TRAPS,
+  DEC_TRAPS
 } from '@/const/store';
-
-/*
-this.state = {
-  unlocked: ['wood'],
-  items: {
-    dagger: {
-      quantity: 0,
-      cost: {
-        wood: [10],
-        claws: [5],
-        hide: [3]
-      }
-    }
-  }
-}
-*/
 
 const initialState = {
   wood: {
@@ -28,7 +16,23 @@ const initialState = {
   },
   fire: {
     quantity: 0,
-    visible: false
+    visible: false,
+    cost: {
+      wood: 0
+    },
+    recipe: {
+      wood: [1]
+    }
+  },
+  traps: {
+    quantity: 0,
+    visible: false,
+    cost: {
+      wood: 5
+    },
+    recipe: {
+      wood: [10, 25, 40, 70, 120]
+    }
   },
   furs: {
     quantity: 0,
@@ -39,10 +43,6 @@ const initialState = {
     visible: false
   },
   hides: {
-    quantity: 0,
-    visible: false
-  },
-  traps: {
     quantity: 0,
     visible: false
   },
@@ -93,9 +93,73 @@ const inventory = (state = initialState, action) => {
       return Object.assign({}, state, {
         fire: {
           quantity: 1,
-          enabled: true
+          visible: true,
+          cost: {
+            wood: getCost(state.fire.recipe.wood, state.fire.quantity)
+          },
+          recipe: state.fire.recipe
         }
       });
+
+    case EN_TRAPS:
+      return Object.assign({}, state, {
+        traps: {
+          quantity: state.traps.quantity,
+          visible: true,
+          cost: {
+            wood: getCost(state.traps.recipe.wood, state.traps.quantity)
+          },
+          recipe: state.traps.recipe
+        }
+      });
+
+      case INC_TRAPS:
+        if (!action.val) {
+          return Object.assign({}, state, {
+            traps: {
+              quantity: state.traps.quantity + 1,
+              visible: state.traps.visible,
+              cost: {
+                wood: getCost(state.traps.recipe.wood, state.traps.quantity)
+              },
+              recipe: state.traps.recipe
+            }
+          });
+        }
+        return Object.assign({}, state, {
+          traps: {
+            quantity: state.traps.quantity + action.val,
+            visible: state.traps.visible,
+            cost: {
+              wood: getCost(state.traps.recipe.wood, state.traps.quantity)
+            },
+            recipe: state.traps.recipe
+          }
+        });
+
+      case DEC_TRAPS:
+        if (!action.val) {
+          return Object.assign({}, state, {
+            traps: {
+              quantity: (state.traps.quantity - 1 < 0) ? 0 : state.traps.quantity - 1,
+              visible: state.traps.visible,
+              cost: {
+                wood: getCost(state.traps.recipe.wood, state.traps.quantity)
+              },
+              recipe: state.traps.recipe
+            }
+          });
+        }
+        return Object.assign({}, state, {
+          traps: {
+            quantity: (state.traps.quantity - action.val < 0) ? 0 : state.traps.quantity - action.val,
+            visible: state.traps.visible,
+            cost: {
+              wood: getCost(state.traps.recipe.wood, state.traps.quantity)
+            },
+            recipe: state.traps.recipe
+          }
+        });
 
     default:
       return state

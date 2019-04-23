@@ -43,7 +43,7 @@ export default class Feed extends React.Component {
 
   render() {
     let lines = this.state.lines.map(line =>
-      <p key={line}>{line}</p>
+      <p key={line + "-" + getTimeElapsed() + "-" + Math.floor(Math.random() * 100)}>{line}</p>
     );
 
     return (

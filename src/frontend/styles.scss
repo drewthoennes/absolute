@@ -6,3 +6,37 @@ body {
 .full {
   height: 100%;
 }
+
+/* Tooltip CSS partially from http://jsfiddle.net/AndreaLigios/jtLbpy62/ */
+[tooltip]:before {
+    content: attr(tooltip);
+    position: absolute;
+    opacity: 0;
+    padding: 5px;
+    border: 1px solid black;
+    z-index: 2;
+}
+
+[tooltip]:hover:before {
+    opacity: 1;
+    background: white;
+    margin-top: 35px;
+    -webkit-animation: fadein 1s;
+    -moz-animation: fadein 0.2s;
+    -ms-animation: fadein 0.2s;
+    -o-animation: fadein 0.2s;
+    animation: fadein 0.2s;
+}
+
+[tooltip]:not([tooltip-persistent]):before {
+    pointer-events: none;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
