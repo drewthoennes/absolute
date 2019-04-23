@@ -38,7 +38,7 @@ const initialState = {
   },
   furs: {
     quantity: 0,
-    visible: true
+    visible: false
   },
   claws: {
     quantity: 0,
@@ -185,16 +185,16 @@ const inventory = (state = initialState, action) => {
       case DEC_FURS:
         if (!action.val) {
           return Object.assign({}, state, {
-            wood: {
-              quantity: (state.wood.quantity - 1 < 0) ? 0 : state.wood.quantity - 1,
-              visible: state.wood.visible
+            furs: {
+              quantity: (state.furs.quantity - 1 < 0) ? 0 : state.furs.quantity - 1,
+              visible: state.furs.visible
             }
           });
         }
         return Object.assign({}, state, {
-          wood: {
-            quantity: (state.wood.quantity - action.val < 0) ? 0 : state.wood.quantity - action.val,
-            visible: state.wood.visible
+          furs: {
+            quantity: (state.furs.quantity - action.val < 0) ? 0 : state.furs.quantity - action.val,
+            visible: state.furs.visible
           }
         });
 
