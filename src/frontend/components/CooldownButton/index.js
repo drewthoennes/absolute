@@ -42,6 +42,35 @@ export default class CooldownButton extends React.Component {
         });
       }
     }
+
+    return this.state;
+  }
+
+  init(data, time) {
+    console.log(data);
+
+    let duration = (new Date().getTime()) - time;
+    console.log('Duration was ' + duration);
+    data.remaining -= duration;
+
+    if (data <= 0) {
+      this.setState({
+        initial: data.initial,
+        remaining: 0,
+        width: 0,
+        decrementing: false,
+        buttonClass: 'cooldown-enabled'
+      });
+    }
+    else {
+      this.setState({
+        initial: data.initial,
+        remaining: data.remaining,
+        width: 0,        
+        decrementing: data.decrementing,
+        buttonClass: 'cooldown-disabled'
+      });
+    }
   }
 
   startCooldown(time) {
@@ -65,7 +94,6 @@ export default class CooldownButton extends React.Component {
   }
 
   render() {
-
     return (
       <div className={"cooldown-button " + this.state.buttonClass} onClick={() => this.cooldownClicked()}>
         <p>{this.props.text}</p>

@@ -1,4 +1,9 @@
-import {GET_WOOD, INC_WOOD, DEC_WOOD} from '@/const/store';
+import {
+  GET_WOOD,
+  INC_WOOD,
+  DEC_WOOD,
+  EN_FIRE
+} from '@/const/store';
 
 /*
 this.state = {
@@ -21,9 +26,13 @@ const initialState = {
     quantity: 0,
     visible: true
   },
+  fire: {
+    quantity: 0,
+    visible: false
+  },
   furs: {
     quantity: 0,
-    visible: true
+    visible: false
   },
   claws: {
     quantity: 0,
@@ -66,10 +75,26 @@ const inventory = (state = initialState, action) => {
 
     case DEC_WOOD:
       if (!action.val) {
-        console.log('Error (DEC_WOOD): Missing increment value');
+        return Object.assign({}, state, {
+          wood: {
+            quantity: (state.wood.quantity - 1 < 0) ? 0 : state.wood.quantity - 1,
+            visible: state.wood.visible
+          }
+        });
       }
       return Object.assign({}, state, {
-        wood: (state.wood.quantity - action.val < 0) ? 0 : state.wood.quantity - action.val
+        wood: {
+          quantity: (state.wood.quantity - action.val < 0) ? 0 : state.wood.quantity - action.val,
+          visible: state.wood.visible
+        }
+      });
+
+    case EN_FIRE:
+      return Object.assign({}, state, {
+        fire: {
+          quantity: 1,
+          enabled: true
+        }
       });
 
     default:

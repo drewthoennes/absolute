@@ -1,5 +1,5 @@
 module.exports = {
-  delta: 250,
+  delta: 500,
   log: false,
   dark: false
 }
