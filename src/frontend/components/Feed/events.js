@@ -9,7 +9,7 @@ import {
 let events = {
   fireEnable: {
     req: {
-      wood: 15
+      wood: 3
     },
     action: () => {
       let line = 'Wood can be used to start a fire to attract others';

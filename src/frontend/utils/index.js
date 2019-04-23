@@ -48,9 +48,20 @@ function formatCostTooltip(obj) {
   return str;
 }
 
+function hasInventory(recipe) {
+  for (let item in recipe) {
+    if (store.getState().inventory[item].quantity < recipe[item]) {
+      return false;
+    }
+
+    return true;
+  }
+}
+
 export {
   log,
   getTimeElapsed,
   getCost,
-  formatCostTooltip
+  formatCostTooltip,
+  hasInventory
 }
