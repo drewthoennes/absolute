@@ -56,7 +56,7 @@ export default class DarkWoods extends React.Component {
 
   gatherWood() {
     store.dispatch(incWood());
-    store.dispatch(addLine('Random sticks and twigs cover the dimly lit forrest floor', getTimeElapsed()));
+    store.dispatch(addLine('Random sticks and twigs cover the dimly lit forrest floor', getTimeElapsed() + 1));
   }
 
   stoakFire() {

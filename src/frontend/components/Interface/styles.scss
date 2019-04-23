@@ -4,7 +4,18 @@
   .areas {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    // justify-content: space-between;
+
+    .area {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .area:first-child {
+      padding-left: 0px;
+    }
+    .area:last-child {
+      padding-right: 0px;
+    }
   }
 
   .area-unselected:hover {

@@ -94,7 +94,7 @@ export default class Interface extends React.Component {
     }
 
     unlocked = unlocked.map(area =>
-      (area === this.state.area) ? <p className="area-selected" key={area}><u>{area}</u></p> : <p className="area-unselected" onClick={() => this.setArea(area)} key={area}>{area}</p>
+      (area === this.state.area) ? <p className="area area-selected" key={area}><u>{area}</u></p> : <p className="area area-unselected" onClick={() => this.setArea(area)} key={area}>{area}</p>
     );
 
     let area;
@@ -115,7 +115,7 @@ export default class Interface extends React.Component {
       area = '';
     }
 
-    
+
 
     return (
       <div id="interface">

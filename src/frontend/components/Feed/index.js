@@ -16,7 +16,8 @@ export default class Feed extends React.Component {
     this.printLines = this.printLines.bind(this);
 
     this.state = {
-      lines: []
+      lines: [],
+      maxLines : 15
     }
 
     this.getOldLines();
@@ -44,9 +45,13 @@ export default class Feed extends React.Component {
     let lines = this.getLines(time);
 
     if (lines) {
-      // console.log(time + ": " + lines.toString());
 
       let concat = this.state.lines.reverse().concat(lines).reverse();
+
+      // Trucate feed
+      if (concat.length > this.state.maxLines) {
+        concat = concat.slice(0, this.state.maxLines);
+      }
       this.setState({
         lines: concat
       });
@@ -78,22 +83,37 @@ export default class Feed extends React.Component {
     // Stops dialogue (that is a multiple of the saveFreq) from printing out again
     lastSecond = current;
     hasPrinted = true;
-    if (toPrint.length > 0) {
 
+    // Truncate feed
+    if (toPrint.length > this.state.maxLines) {
+      toPrint = toPrint.slice(0, this.state.maxLines);
     }
 
     this.state.lines = toPrint.reverse();
   }
 
   render() {
+    let index = 0;
     let lines = this.state.lines.map(line =>
-      <p key={line + "-" + getTimeElapsed() + "-" + Math.floor(Math.random() * 100)}>{line}</p>
+      <p key={line + "-" + index++}>{line}</p>
     );
+
+    let fade;
+    // Only show fade if the feed has reached the bottom
+    if (this.state.maxLines == this.state.lines.length) {
+      fade = (
+        <div className="fade"></div>
+      );
+    }
+    else {
+      fade = '';
+    }
 
     return (
       <div id="feed">
         <div id="lines">
           {lines}
+          {fade}
         </div>
       </div>
     );
