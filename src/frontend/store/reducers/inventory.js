@@ -28,7 +28,7 @@ const initialState = {
     quantity: 0,
     visible: false,
     cost: {
-      wood: 0
+      wood: 5
     },
     recipe: {
       wood: [10, 25, 40, 70, 120]

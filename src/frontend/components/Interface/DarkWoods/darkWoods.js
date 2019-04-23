@@ -22,6 +22,7 @@ export default class DarkWoods extends React.Component {
     this.makeTrapButton = React.createRef();
 
     this.init = this.init.bind(this);
+    this.makeTrap = this.makeTrap.bind(this);
 
     this.state = {
       area: 'Dark Woods'
@@ -64,6 +65,7 @@ export default class DarkWoods extends React.Component {
 
   makeTrap() {
     store.dispatch(incTraps());
+    store.dispatch(decWood(this.props.inventory.traps.cost.wood));
   }
 
   render() {

@@ -13,7 +13,7 @@ let events = {
       wood: 15
     },
     action: () => {
-      let line = 'Wood can be used to start a fire to attract others';
+      let line = 'Wood can be used to start a fire to attract others.';
       store.dispatch(addLine(line, getTimeElapsed()));
       store.dispatch(enableFire());
     }
@@ -33,7 +33,7 @@ let events = {
       traps: 1
     },
     action: () => {
-      let line = 'You discover a small path not far from the clearing';
+      let line = 'You discover a small path not far from the clearing.';
       store.dispatch(addLine(line, getTimeElapsed()));
       store.dispatch(enableStonyPath());
     }

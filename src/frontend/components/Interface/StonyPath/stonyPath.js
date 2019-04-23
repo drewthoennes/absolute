@@ -12,33 +12,48 @@ export default class StonyPath extends React.Component {
   constructor(props) {
     super(props);
 
+    this.checkTrapsButton = React.createRef();
+
     this.init = this.init.bind(this);
 
     this.state = {};
   }
 
   tick() {
-    let state = {};
+    let state = {
+      checkTrapsButton: this.checkTrapsButton.current.tick()
+    };
 
     return state;
   }
 
   init(data) {
     // Initialize all cooldown buttons to their correct positions
+    this.checkTrapsButton.current.init(data.state.checkTrapsButton, data.time);
+  }
+
+  checkTraps() {
+    console.log('checkTraps clicked');
+    // Add to claws and furs
+    store.dispatch(addLine('You gather small bits of fur and claws to use later.', getTimeElapsed()));
+    // Random chance of traps breaking
   }
 
   render() {
-    // let fire = this.props.inventory.fire;
-    // let fireButton;
-    // if (fire.visible) {
-    //   fireButton = (
-    //    <CooldownButton ref={this.stoakFireButton} cooldown="8000" text="Stoak fire" tooltip={formatCostTooltip(fire.cost)} enabled={hasInventory(fire.recipe)} cb={this.stoakFire}/>
-    //   );
-    // }
+    let traps = this.props.inventory.traps;
+    let checkTrapsButton;
+    if (traps.visible) {
+      checkTrapsButton = (
+       <CooldownButton ref={this.checkTrapsButton} cooldown="20000" text="Check traps" enabled={traps.quantity > 0} cb={this.checkTraps}/>
+      );
+    }
+    else {
+      checkTrapsButton = '';
+    }
 
     return (
       <div id="stony-path">
-        <p>Stony Path</p>
+        {checkTrapsButton}
       </div>
     );
   }
