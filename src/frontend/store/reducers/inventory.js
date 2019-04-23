@@ -13,7 +13,7 @@ import {
 
 const initialState = {
   wood: {
-    quantity: 0,
+    quantity: 100,
     visible: true
   },
   fire: {
@@ -171,14 +171,14 @@ const inventory = (state = initialState, action) => {
           return Object.assign({}, state, {
             furs: {
               quantity: state.furs.quantity + Math.floor(Math.random() * 5) + 3,
-              visible: state.furs.visible
+              visible: true
             }
           });
         }
         return Object.assign({}, state, {
           furs: {
             quantity: state.furs.quantity + action.val,
-            visible: state.furs.visible
+            visible: true
           }
         });
   
