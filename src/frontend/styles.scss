@@ -7,7 +7,32 @@ body {
   height: 100%;
 }
 
-/* Tooltip CSS partially from http://jsfiddle.net/AndreaLigios/jtLbpy62/ */
+/* Part of tooltip CSS from http://jsfiddle.net/AndreaLigios/jtLbpy62/ */
+[tooltip]:not([tooltip-persistent]):before {
+    pointer-events: none;
+}
+
+.cooldown-disabled[tooltip]:before {
+    content: attr(tooltip);
+    position: absolute;
+    opacity: 0;
+    padding: 5px;
+    border: 1px solid black;
+    z-index: 2;
+    color: red;
+}
+
+.cooldown-disalbed[tooltip]:hover:before {
+    opacity: 1;
+    background: white;
+    margin-top: 35px;
+    -webkit-animation: fadein 1s;
+    -moz-animation: fadein 0.2s;
+    -ms-animation: fadein 0.2s;
+    -o-animation: fadein 0.2s;
+    animation: fadein 0.2s;
+}
+
 [tooltip]:before {
     content: attr(tooltip);
     position: absolute;
@@ -15,6 +40,7 @@ body {
     padding: 5px;
     border: 1px solid black;
     z-index: 2;
+    color: blue;
 }
 
 [tooltip]:hover:before {
@@ -26,10 +52,6 @@ body {
     -ms-animation: fadein 0.2s;
     -o-animation: fadein 0.2s;
     animation: fadein 0.2s;
-}
-
-[tooltip]:not([tooltip-persistent]):before {
-    pointer-events: none;
 }
 
 @keyframes fadein {
