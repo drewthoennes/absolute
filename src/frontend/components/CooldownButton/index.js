@@ -93,7 +93,7 @@ export default class CooldownButton extends React.Component {
 
   render() {
     return (
-      <div className={"cooldown-button " + this.state.buttonClass} onClick={() => this.cooldownClicked()}>
+      <div tooltip={this.props.tooltip == "" ? undefined : this.props.tooltip} className={"cooldown-button " + this.state.buttonClass} onClick={() => this.cooldownClicked()}>
         <div className="cooldown-button-text">
           <p>{this.props.text}</p>
         </div>
@@ -106,6 +106,7 @@ export default class CooldownButton extends React.Component {
 
 CooldownButton.defaultProps = {
   text: 'Sample text',
+  tooltip: undefined,
   cooldown: 5000,
   cb: () => {
     log('Error: CooldownButton does not have a callback')

@@ -2,9 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles.scss';
 import c from '@/const';
-import {log, getTimeElapsed} from '@/utils';
+import {log, getTimeElapsed, formatCostTooltip} from '@/utils';
 import store from '@/store';
-import {incWood, decWood, addLine} from '@/store/actions';
+import {
+  incWood,
+  decWood,
+  addLine,
+  incTraps
+} from '@/store/actions';
 
 import CooldownButton from '@/components/CooldownButton';
 
@@ -54,7 +59,7 @@ export default class DarkWoods extends React.Component {
   }
 
   makeTrap() {
-
+    store.dispatch(incTraps());
   }
 
   render() {
@@ -65,7 +70,7 @@ export default class DarkWoods extends React.Component {
     let fireButton;
     if (this.props.inventory.fire.visible) {
       fireButton = (
-       <CooldownButton ref={this.stoakFireButton} cooldown="8000" text="Stoak fire" cb={this.stoakFire}/>
+       <CooldownButton ref={this.stoakFireButton} cooldown="8000" text="Stoak fire" tooltip={formatCostTooltip(this.props.inventory.fire.cost)} cb={this.stoakFire}/>
       );
     }
     else {
@@ -75,7 +80,7 @@ export default class DarkWoods extends React.Component {
     let trapButton;
     if (this.props.inventory.traps.visible) {
       trapButton = (
-       <CooldownButton ref={this.makeTrapButton} cooldown="8000" text="Build trap" cb={this.makeTrap}/>
+       <CooldownButton ref={this.makeTrapButton} cooldown="8000" text="Build trap" tooltip={formatCostTooltip(this.props.inventory.traps.cost)} cb={this.makeTrap}/>
       );
     }
     else {
