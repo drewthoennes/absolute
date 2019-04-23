@@ -15,7 +15,7 @@ const defaultState = {
     0: ['The darkness of the forrest envelops you.'],
     5: ['You are surrounded by an open clearing.'],
     120: ['A strange figure approaches through the shadows.'],
-    123: ['Says it expects payment for what you\'ve taken from it as it slips back into the darkness']
+    123: ['Says it expects payment for what you\'ve taken as it slips back into the darkness']
   },
   completed: []
 }

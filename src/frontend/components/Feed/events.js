@@ -4,7 +4,8 @@ import {
   addLine,
   enableFire,
   enableTraps,
-  enableStonyPath
+  enableStonyPath,
+  demandPayment
 } from '@/store/actions';
 
 let events = {
@@ -37,6 +38,16 @@ let events = {
       store.dispatch(addLine(line, getTimeElapsed()));
       store.dispatch(enableStonyPath());
     }
+  },
+  demandPayment: {
+    req:{
+      wood: 3
+    },
+    action: () => {
+      store.dispatch(addLine("testing", getTimeElapsed()));
+      store.dispatch(enableStonyPath());
+    }
+
   }
 }
 
@@ -67,6 +78,12 @@ function tick() {
     events.stonyPathEnable.action();
     events.stonyPathEnable.done = true;
   }
+
+  if (!events.demandPayment.done && ready(inventory, events.demandPayment.req)) {
+    events.demandPayment.action();
+    events.demandPayment.done = true;
+  }
+
 }
 
 export {tick}
