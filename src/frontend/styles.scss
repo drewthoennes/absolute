@@ -12,7 +12,7 @@ body {
     pointer-events: none;
 }
 
-.cooldown-disabled[tooltip]:before {
+.no-ingredients[tooltip]:before {
     content: attr(tooltip);
     position: absolute;
     opacity: 0;
@@ -22,7 +22,7 @@ body {
     color: red;
 }
 
-.cooldown-disalbed[tooltip]:hover:before {
+.no-ingredients[tooltip]:hover:before {
     opacity: 1;
     background: white;
     margin-top: 35px;
