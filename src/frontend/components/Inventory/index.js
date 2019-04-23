@@ -10,7 +10,8 @@ const mapStateToProps = state => {
     claws: state.inventory.claws,
     hides: state.inventory.hides,
     traps: state.inventory.traps,
-    daggers: state.inventory.daggers
+    daggers: state.inventory.daggers,
+    gold: state.inventory.gold
   }
 }
 

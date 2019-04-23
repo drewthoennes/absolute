@@ -51,6 +51,10 @@ const initialState = {
   daggers: {
     quantity: 0,
     visible: false
+  },
+  gold: {
+    quantity: 10,
+    visible: true
   }
 }
 
@@ -67,7 +71,7 @@ const inventory = (state = initialState, action) => {
           wood: {
             quantity: state.wood.quantity + Math.floor(Math.random() * 5) + 3,
             visible: state.wood.visible
-          }
+          },
         });
       }
       return Object.assign({}, state, {
@@ -166,7 +170,6 @@ const inventory = (state = initialState, action) => {
         });
       
       case INC_FURS:
-        console.log('inc wood');
         if (!action.val) {
           return Object.assign({}, state, {
             furs: {
@@ -195,6 +198,38 @@ const inventory = (state = initialState, action) => {
           furs: {
             quantity: (state.furs.quantity - action.val < 0) ? 0 : state.furs.quantity - action.val,
             visible: state.furs.visible
+          }
+        });
+
+      case INC_GOLD:
+        if (!action.val) {
+          return Object.assign({}, state, {
+            gold: {
+              quantity: state.gold.quantity + Math.floor(Math.random() * 5) + 3,
+              visible: true
+            }
+          });
+        }
+        return Object.assign({}, state, {
+          gold: {
+            quantity: state.gold.quantity + action.val,
+            visible: true
+          }
+        });
+  
+      case DEC_GOLD:
+        if (!action.val) {
+          return Object.assign({}, state, {
+            gold: {
+              quantity: (state.gold.quantity - 1 < 0) ? 0 : state.gold.quantity - 1,
+              visible: state.gold.visible
+            }
+          });
+        }
+        return Object.assign({}, state, {
+          gold: {
+            quantity: (state.gold.quantity - action.val < 0) ? 0 : state.gold.quantity - action.val,
+            visible: state.gold.visible
           }
         });
 

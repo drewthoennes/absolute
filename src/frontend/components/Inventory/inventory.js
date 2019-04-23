@@ -14,7 +14,8 @@ export default class Inventory extends React.Component {
         'claws',
         'hides',
         'traps',
-        'daggers'
+        'daggers',
+        'gold'
       ]
     }
   }
@@ -28,7 +29,7 @@ export default class Inventory extends React.Component {
         <p>{this.props[item].quantity}</p>
       </div>
     );
-
+    console.log("testing");
     return (
       <div id="inventory">
         <div id="materials">
