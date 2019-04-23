@@ -5,7 +5,9 @@ import {
   EN_FIRE,
   EN_TRAPS,
   INC_TRAPS,
-  DEC_TRAPS
+  DEC_TRAPS,
+  INC_FURS,
+  DEC_FURS
 } from '@/const/store';
 
 export const getWood = () => ({
@@ -37,5 +39,15 @@ export const incTraps = (val) => ({
 
 export const decTraps = (val) => ({
   type: DEC_TRAPS,
+  val
+});
+
+export const incFurs = (val) => ({
+  type: INC_FURS,
+  val
+});
+
+export const decFurs = (val) => ({
+  type: DEC_FURS,
   val
 });

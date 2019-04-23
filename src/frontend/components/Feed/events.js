@@ -10,7 +10,7 @@ import {
 let events = {
   fireEnable: {
     req: {
-      wood: 15
+      wood: 15 //Return to 15 wood
     },
     action: () => {
       let line = 'Wood can be used to start a fire to attract others.';
@@ -20,7 +20,7 @@ let events = {
   },
   trapsEnable: {
     req: {
-      wood: 50
+      wood: 50  //Return to 50 woods
     },
     action: () => {
       let line = 'Traps can catch what you cannot.';

@@ -2,6 +2,8 @@ module.exports = {
   GET_WOOD: 'get_wood', // Inventory
   INC_WOOD: 'inc_wood',
   DEC_WOOD: 'dec_wood',
+  INC_FURS: 'inc_furs',
+  DEC_FURS: 'dec_furs',
   EN_FIRE: 'enable_fire',
   EN_TRAPS: 'enable_traps',
   INC_TRAPS: 'inc_traps',

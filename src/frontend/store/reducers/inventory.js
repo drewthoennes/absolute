@@ -6,7 +6,9 @@ import {
   EN_FIRE,
   EN_TRAPS,
   INC_TRAPS,
-  DEC_TRAPS
+  DEC_TRAPS,
+  INC_FURS,
+  DEC_FURS
 } from '@/const/store';
 
 const initialState = {
@@ -36,7 +38,7 @@ const initialState = {
   },
   furs: {
     quantity: 0,
-    visible: false
+    visible: true
   },
   claws: {
     quantity: 0,
@@ -53,11 +55,13 @@ const initialState = {
 }
 
 const inventory = (state = initialState, action) => {
+  console.log("Action: " + action.type);
   switch (action.type) {
     case GET_WOOD:
       return state.wood.quantity
 
     case INC_WOOD:
+    console.log('inc wood');
       if (!action.val) {
         return Object.assign({}, state, {
           wood: {
@@ -112,7 +116,7 @@ const inventory = (state = initialState, action) => {
           recipe: state.traps.recipe
         }
       });
-
+      
       case INC_TRAPS:
         if (!action.val) {
           return Object.assign({}, state, {
@@ -160,7 +164,41 @@ const inventory = (state = initialState, action) => {
             recipe: state.traps.recipe
           }
         });
+      
+      case INC_FURS:
+        console.log('inc wood');
+        if (!action.val) {
+          return Object.assign({}, state, {
+            furs: {
+              quantity: state.furs.quantity + Math.floor(Math.random() * 5) + 3,
+              visible: state.furs.visible
+            }
+          });
+        }
+        return Object.assign({}, state, {
+          furs: {
+            quantity: state.furs.quantity + action.val,
+            visible: state.furs.visible
+          }
+        });
+  
+      case DEC_FURS:
+        if (!action.val) {
+          return Object.assign({}, state, {
+            wood: {
+              quantity: (state.wood.quantity - 1 < 0) ? 0 : state.wood.quantity - 1,
+              visible: state.wood.visible
+            }
+          });
+        }
+        return Object.assign({}, state, {
+          wood: {
+            quantity: (state.wood.quantity - action.val < 0) ? 0 : state.wood.quantity - action.val,
+            visible: state.wood.visible
+          }
+        });
 
+    
     default:
       return state
   }

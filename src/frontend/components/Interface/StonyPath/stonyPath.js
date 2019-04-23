@@ -4,7 +4,15 @@ import './styles.scss';
 import c from '@/const';
 import {log, getTimeElapsed, formatCostTooltip, hasInventory} from '@/utils';
 import store from '@/store';
-import {} from '@/store/actions';
+
+import {
+  incWood,
+  decWood,
+  addLine,
+  incTraps,
+  incFurs
+} from '@/store/actions';
+
 
 import CooldownButton from '@/components/CooldownButton';
 
@@ -34,8 +42,10 @@ export default class StonyPath extends React.Component {
 
   checkTraps() {
     console.log('checkTraps clicked');
+    
     // Add to claws and furs
     store.dispatch(addLine('You gather small bits of fur and claws to use later.', getTimeElapsed()));
+    store.dispatch(incFurs());
     // Random chance of traps breaking
   }
 
