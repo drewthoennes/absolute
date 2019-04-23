@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom';
 import './styles.scss';
 import {log, getTimeElapsed} from '@/utils';
 import store from '@/store';
-import {deleteLines} from '@/store/actions';
+import {completedLine, deleteLines} from '@/store/actions';
 import {tick} from './events';
+
+let lastSecond = 0;
+let hasPrinted = false;
 
 export default class Feed extends React.Component {
   constructor(props) {
@@ -15,6 +18,8 @@ export default class Feed extends React.Component {
     this.state = {
       lines: []
     }
+
+    this.getOldLines();
   }
 
   tick() {
@@ -28,17 +33,56 @@ export default class Feed extends React.Component {
 
   printLines() {
     let time = getTimeElapsed();
+    if (time > lastSecond) {
+      lastSecond = time;
+      hasPrinted = true;
+    }
+    else if (time == lastSecond && hasPrinted) {
+      return;
+    }
+
     let lines = this.getLines(time);
-    store.dispatch(deleteLines(time));
 
     if (lines) {
-      log(time + ": " + lines.toString());
+      // console.log(time + ": " + lines.toString());
 
       let concat = this.state.lines.reverse().concat(lines).reverse();
       this.setState({
         lines: concat
       });
     }
+  }
+
+  getOldLines() {
+    let lines = store.getState().dialogue.lines;
+
+    let current = getTimeElapsed();
+    if (current == 0) {
+      return;
+    }
+
+    let toPrint = [];
+    let times = [];
+    for (let time in lines) {
+      if (time > current) {
+        break;
+      }
+
+      lines[time].forEach(line => {
+        toPrint.push(line);
+      });
+
+      times.push(time);
+    }
+
+    // Stops dialogue (that is a multiple of the saveFreq) from printing out again
+    lastSecond = current;
+    hasPrinted = true;
+    if (toPrint.length > 0) {
+
+    }
+
+    this.state.lines = toPrint.reverse();
   }
 
   render() {

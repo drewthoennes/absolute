@@ -29,7 +29,7 @@ export default class StonyPath extends React.Component {
 
   tick() {
     let state = {
-      checkTrapsButton: this.checkTrapsButton.current.tick()
+      checkTrapsButton: this.checkTrapsButton.current ? this.checkTrapsButton.current.tick() : ''
     };
 
     return state;

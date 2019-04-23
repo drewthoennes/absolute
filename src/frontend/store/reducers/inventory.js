@@ -1,4 +1,4 @@
-import {getCost} from '@/utils';
+import {getCost, getGameState} from '@/utils';
 import {
   GET_WOOD,
   INC_WOOD,
@@ -13,9 +13,9 @@ import {
   DEC_GOLD
 } from '@/const/store';
 
-const initialState = {
+const defaultState = {
   wood: {
-    quantity: 100,
+    quantity: 0,
     visible: true
   },
   fire: {
@@ -55,9 +55,19 @@ const initialState = {
     visible: false
   },
   gold: {
-    quantity: 10,
+    quantity: 0,
     visible: true
   }
+}
+
+let initialState;
+
+let save = getGameState();
+if (save && save.inventory) {
+  initialState = save.inventory
+}
+else {
+  initialState = defaultState;
 }
 
 const inventory = (state = initialState, action) => {
@@ -122,7 +132,7 @@ const inventory = (state = initialState, action) => {
           recipe: state.traps.recipe
         }
       });
-      
+
       case INC_TRAPS:
         if (!action.val) {
           return Object.assign({}, state, {
@@ -170,7 +180,7 @@ const inventory = (state = initialState, action) => {
             recipe: state.traps.recipe
           }
         });
-      
+
       case INC_FURS:
         if (!action.val) {
           return Object.assign({}, state, {
@@ -186,7 +196,7 @@ const inventory = (state = initialState, action) => {
             visible: true
           }
         });
-  
+
       case DEC_FURS:
         if (!action.val) {
           return Object.assign({}, state, {
@@ -218,7 +228,7 @@ const inventory = (state = initialState, action) => {
             visible: true
           }
         });
-  
+
       case DEC_GOLD:
         if (!action.val) {
           return Object.assign({}, state, {
@@ -235,7 +245,7 @@ const inventory = (state = initialState, action) => {
           }
         });
 
-    
+
     default:
       return state
   }

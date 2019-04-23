@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles.scss';
 import c from '@/const';
-import {log} from '@/utils';
+import {log, getTimeElapsed, saveGameState} from '@/utils';
 
 import Feed from '@/components/Feed';
 import Inventory from '@/components/Inventory';
 import Interface from '@/components/Interface';
+
+let elapsed = c.saveFreq;
 
 export default class Loop extends React.Component {
   constructor(props) {
@@ -33,6 +35,13 @@ export default class Loop extends React.Component {
 
       this.interface.current.tick();
       this.feed.current.tick();
+    }
+
+    // Stub to save the game state
+    elapsed -= c.delta;
+    if (elapsed <= 0) {
+      saveGameState();
+      elapsed = c.saveFreq;
     }
   }
 
