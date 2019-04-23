@@ -1,9 +1,10 @@
+import {getGameState} from '@/utils';
 import {
   UPDATE_DARK_WOODS,
   EN_STONY_PATH
 } from '@/const/store';
 
-const initialState = {
+let defaultState = {
   darkWoods: {
     enabled: true,
     state: {},
@@ -24,6 +25,16 @@ const initialState = {
     state: {},
     time: ''
   }
+}
+
+let initialState;
+
+let save = getGameState();
+if (save && save.areas) {
+  initialState = save.areas
+}
+else {
+  initialState = defaultState;
 }
 
 const progress = (state = initialState, action) => {

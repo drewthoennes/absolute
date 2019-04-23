@@ -58,10 +58,31 @@ function hasInventory(cost) {
   }
 }
 
+function saveGameState() {
+  console.log('Saving game state');
+
+  let state = store.getState();
+
+  state.progress.stop = new Date().getTime();
+  state.dialogue.completed = [];
+
+  localStorage.setItem('gameState', JSON.stringify(state));
+}
+
+function getGameState() {
+  let state = JSON.parse(localStorage.getItem('gameState'));
+  if (state && state.progress && state.progress.stop) {
+    delete state.progress.stop;
+  }
+  return JSON.parse(localStorage.getItem('gameState'));
+}
+
 export {
   log,
   getTimeElapsed,
   getCost,
   formatCostTooltip,
-  hasInventory
+  hasInventory,
+  saveGameState,
+  getGameState
 }
