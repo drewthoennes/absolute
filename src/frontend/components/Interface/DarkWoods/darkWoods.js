@@ -45,8 +45,12 @@ export default class DarkWoods extends React.Component {
   init(data) {
     // Initialize all cooldown buttons to their correct positions
     this.gatherWoodButton.current.init(data.state.gatherWoodButton, data.time);
-    this.stoakFireButton.current.init(data.state.stoakFireButton, data.time);
-    this.stoakFireButton.current.init(data.state.makeTrapButton, data.time);
+    if (this.stoakFireButton.current) {
+      this.stoakFireButton.current.init(data.state.stoakFireButton, data.time);
+    }
+    if (this.makeTrapButton.current) {
+      this.makeTrapButton.current.init(data.state.makeTrapButton, data.time);
+    }
   }
 
   gatherWood() {
@@ -71,7 +75,7 @@ export default class DarkWoods extends React.Component {
     let fireButton;
     if (fire.visible) {
       fireButton = (
-       <CooldownButton ref={this.stoakFireButton} cooldown="8000" text="Stoak fire" tooltip={formatCostTooltip(fire.cost)} enabled={hasInventory(fire.recipe)} cb={this.stoakFire}/>
+       <CooldownButton ref={this.stoakFireButton} cooldown="8000" text="Stoak fire" tooltip={formatCostTooltip(fire.cost)} enabled={hasInventory(fire.cost)} cb={this.stoakFire}/>
       );
     }
     else {
@@ -82,7 +86,7 @@ export default class DarkWoods extends React.Component {
     let trapButton;
     if (traps.visible) {
       trapButton = (
-       <CooldownButton ref={this.makeTrapButton} cooldown="8000" text="Build trap" tooltip={formatCostTooltip(traps.cost)} enabled={hasInventory(traps.recipe)} cb={this.makeTrap}/>
+       <CooldownButton ref={this.makeTrapButton} cooldown="8000" text="Build trap" tooltip={formatCostTooltip(traps.cost)} enabled={hasInventory(traps.cost)} cb={this.makeTrap}/>
       );
     }
     else {

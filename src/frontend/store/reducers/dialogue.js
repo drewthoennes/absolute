@@ -9,7 +9,10 @@ import {ADD_LINE, DELETE_LINES} from '@/const/store';
 const initialState = {
   lines: {
     0: ['The darkness of the forrest envelops you.'],
-    5: ['You are surrounded by an open clearing.']
+    5: ['You are surrounded by an open clearing.'],
+    120: ['A strange figure approaches through the shadows.'],
+    123: ['Says he expects payment for what you\'ve taken from him as it slips back into the darkness'],
+
   }
 }
 

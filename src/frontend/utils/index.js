@@ -48,9 +48,9 @@ function formatCostTooltip(obj) {
   return str;
 }
 
-function hasInventory(recipe) {
-  for (let item in recipe) {
-    if (store.getState().inventory[item].quantity < recipe[item]) {
+function hasInventory(cost) {
+  for (let item in cost) {
+    if (store.getState().inventory[item].quantity < cost[item]) {
       return false;
     }
 

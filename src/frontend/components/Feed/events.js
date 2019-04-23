@@ -3,13 +3,14 @@ import {getTimeElapsed} from '@/utils';
 import {
   addLine,
   enableFire,
-  enableTraps
+  enableTraps,
+  enableStonyPath
 } from '@/store/actions';
 
 let events = {
   fireEnable: {
     req: {
-      wood: 3
+      wood: 15
     },
     action: () => {
       let line = 'Wood can be used to start a fire to attract others';
@@ -25,6 +26,16 @@ let events = {
       let line = 'Traps can catch what you cannot.';
       store.dispatch(addLine(line, getTimeElapsed()));
       store.dispatch(enableTraps());
+    }
+  },
+  stonyPathEnable: {
+    req: {
+      traps: 1
+    },
+    action: () => {
+      let line = 'You discover a small path not far from the clearing';
+      store.dispatch(addLine(line, getTimeElapsed()));
+      store.dispatch(enableStonyPath());
     }
   }
 }
@@ -50,6 +61,11 @@ function tick() {
   if (!events.trapsEnable.done && ready(inventory, events.trapsEnable.req)) {
     events.trapsEnable.action();
     events.trapsEnable.done = true;
+  }
+
+  if (!events.stonyPathEnable.done && ready(inventory, events.stonyPathEnable.req)) {
+    events.stonyPathEnable.action();
+    events.stonyPathEnable.done = true;
   }
 }
 

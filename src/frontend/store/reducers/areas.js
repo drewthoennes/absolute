@@ -1,8 +1,16 @@
-import {UPDATE_DARK_WOODS} from '@/const/store';
+import {
+  UPDATE_DARK_WOODS,
+  EN_STONY_PATH
+} from '@/const/store';
 
 const initialState = {
   darkWoods: {
     enabled: true,
+    state: {},
+    time: ''
+  },
+  stonyPath: {
+    enabled: false,
     state: {},
     time: ''
   },
@@ -26,6 +34,15 @@ const progress = (state = initialState, action) => {
           enabled: state.darkWoods.enabled,
           state: action.data,
           time: new Date().getTime()
+        }
+      });
+
+    case EN_STONY_PATH:
+      return Object.assign({}, state, {
+        stonyPath: {
+          enabled: true,
+          state: state.stonyPath.state,
+          time: state.stonyPath.time
         }
       });
 
