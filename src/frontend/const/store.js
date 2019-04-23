@@ -4,6 +4,8 @@ module.exports = {
   DEC_WOOD: 'dec_wood',
   INC_FURS: 'inc_furs',
   DEC_FURS: 'dec_furs',
+  INC_GOLD: 'inc_gold',
+  DEC_GOLD: 'dec_gold',
   EN_FIRE: 'enable_fire',
   EN_TRAPS: 'enable_traps',
   INC_TRAPS: 'inc_traps',

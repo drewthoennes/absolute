@@ -51,3 +51,13 @@ export const decFurs = (val) => ({
   type: DEC_FURS,
   val
 });
+
+export const incGold = (val) => ({
+  type: INC_GOLD,
+  val
+});
+
+export const decGold = (val) => ({
+  type: DEC_GOLD,
+  val
+});

@@ -8,7 +8,9 @@ import {
   INC_TRAPS,
   DEC_TRAPS,
   INC_FURS,
-  DEC_FURS
+  DEC_FURS,
+  INC_GOLD,
+  DEC_GOLD
 } from '@/const/store';
 
 const initialState = {
