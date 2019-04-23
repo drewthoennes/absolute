@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles.scss';
 import c from '@/const';
-import {log} from '@/utils';
+import {log, getTimeElapsed} from '@/utils';
 import store from '@/store';
-import {incWood, decWood} from '@/store/actions';
+import {incWood, decWood, addLine} from '@/store/actions';
 
 import CooldownButton from '@/components/CooldownButton';
 
@@ -14,6 +14,7 @@ export default class DarkWoods extends React.Component {
 
     this.gatherWoodButton = React.createRef();
     this.stoakFireButton = React.createRef();
+    this.makeTrapButton = React.createRef();
 
     this.init = this.init.bind(this);
 
@@ -24,13 +25,13 @@ export default class DarkWoods extends React.Component {
 
   componentDidMount() {
     log('DarkWoods mounted');
-    console.log(this.props.inventory);
   }
 
   tick() {
     let state = {
       gatherWoodButton: this.gatherWoodButton.current.tick(),
-      stoakFireButton: this.stoakFireButton.current ? this.stoakFireButton.current.tick() : '' // Prevents calling tick before fire is enabled
+      stoakFireButton: this.stoakFireButton.current ? this.stoakFireButton.current.tick() : '', // Prevents calling tick before fire is enabled
+      makeTrapButton: this.makeTrapButton.current ? this.makeTrapButton.current.tick() : ''
     }
 
     return state;
@@ -40,14 +41,20 @@ export default class DarkWoods extends React.Component {
     // Initialize all cooldown buttons to their correct positions
     this.gatherWoodButton.current.init(data.state.gatherWoodButton, data.time);
     this.stoakFireButton.current.init(data.state.stoakFireButton, data.time);
+    this.stoakFireButton.current.init(data.state.makeTrapButton, data.time);
   }
 
   gatherWood() {
     store.dispatch(incWood());
+    store.dispatch(addLine('Random sticks and twigs cover the dimly lit forrest floor', getTimeElapsed()));
   }
 
   stoakFire() {
     store.dispatch(decWood());
+  }
+
+  makeTrap() {
+
   }
 
   render() {
@@ -56,7 +63,7 @@ export default class DarkWoods extends React.Component {
     );
 
     let fireButton;
-    if (this.props.inventory.fire.enabled) {
+    if (this.props.inventory.fire.visible) {
       fireButton = (
        <CooldownButton ref={this.stoakFireButton} cooldown="8000" text="Stoak fire" cb={this.stoakFire}/>
       );
@@ -65,10 +72,21 @@ export default class DarkWoods extends React.Component {
       fireButton = '';
     }
 
+    let trapButton;
+    if (this.props.inventory.traps.visible) {
+      trapButton = (
+       <CooldownButton ref={this.makeTrapButton} cooldown="8000" text="Build trap" cb={this.makeTrap}/>
+      );
+    }
+    else {
+      trapButton = '';
+    }
+
     return (
       <div id="dark-woods">
         {woodButton}
         {fireButton}
+        {trapButton}
       </div>
     );
   }

@@ -2,7 +2,10 @@ import {
   GET_WOOD,
   INC_WOOD,
   DEC_WOOD,
-  EN_FIRE
+  EN_FIRE,
+  EN_TRAPS,
+  INC_TRAPS,
+  DEC_TRAPS
 } from '@/const/store';
 
 /*
@@ -30,6 +33,10 @@ const initialState = {
     quantity: 0,
     visible: false
   },
+  traps: {
+    quantity: 0,
+    visible: false
+  },
   furs: {
     quantity: 0,
     visible: false
@@ -39,10 +46,6 @@ const initialState = {
     visible: false
   },
   hides: {
-    quantity: 0,
-    visible: false
-  },
-  traps: {
     quantity: 0,
     visible: false
   },
@@ -93,9 +96,49 @@ const inventory = (state = initialState, action) => {
       return Object.assign({}, state, {
         fire: {
           quantity: 1,
-          enabled: true
+          visible: true
         }
       });
+
+    case EN_TRAPS:
+      return Object.assign({}, state, {
+        traps: {
+          quantity: state.traps.quantity,
+          visible: true
+        }
+      });
+
+      case INC_TRAPS:
+        if (!action.val) {
+          return Object.assign({}, state, {
+            traps: {
+              quantity: state.traps.quantity + 1,
+              visible: state.traps.visible
+            }
+          });
+        }
+        return Object.assign({}, state, {
+          traps: {
+            quantity: state.traps.quantity + action.val,
+            visible: state.traps.visible
+          }
+        });
+
+      case DEC_TRAPS:
+        if (!action.val) {
+          return Object.assign({}, state, {
+            traps: {
+              quantity: (state.traps.quantity - 1 < 0) ? 0 : state.traps.quantity - 1,
+              visible: state.traps.visible
+            }
+          });
+        }
+        return Object.assign({}, state, {
+          traps: {
+            quantity: (state.traps.quantity - action.val < 0) ? 0 : state.traps.quantity - action.val,
+            visible: state.traps.visible
+          }
+        });
 
     default:
       return state

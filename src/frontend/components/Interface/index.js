@@ -42,7 +42,6 @@ export default class Interface extends React.Component {
   setArea(area) {
     if (this.state.area == 'Dark Woods') {
       store.dispatch(updateDarkWoods(this.state.data));
-      console.log('Updated Dark Woods');
     }
     else if (this.state.area == 'Abandoned Mine') {
       // Update Abandoned Mine
@@ -62,10 +61,6 @@ export default class Interface extends React.Component {
         // Updating Trading Post
       }
     });
-  }
-
-  cooldownFunction() {
-    console.log('CooldownButton clicked!');
   }
 
   render() {

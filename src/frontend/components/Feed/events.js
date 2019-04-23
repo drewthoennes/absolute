@@ -1,14 +1,31 @@
 import store from '@/store';
-import {addLine, enableFire} from '@/store/actions';
 import {getTimeElapsed} from '@/utils';
+import {
+  addLine,
+  enableFire,
+  enableTraps
+} from '@/store/actions';
 
 let events = {
   fireEnable: {
-    line: 'Wood can be used to start a fire to attract others',
-    requirements: {
+    req: {
       wood: 15
     },
-    done: false
+    action: () => {
+      let line = 'Wood can be used to start a fire to attract others';
+      store.dispatch(addLine(line, getTimeElapsed()));
+      store.dispatch(enableFire());
+    }
+  },
+  trapsEnable: {
+    req: {
+      wood: 50
+    },
+    action: () => {
+      let line = 'Traps can catch what you cannot.';
+      store.dispatch(addLine(line, getTimeElapsed()));
+      store.dispatch(enableTraps());
+    }
   }
 }
 
@@ -25,14 +42,15 @@ function ready(inventory, requirements) {
 function tick() {
   let inventory = store.getState().inventory;
 
-  if (events.fireEnable && !events.fireEnable.done && ready(inventory, events.fireEnable.requirements)) {
-    console.log('Enable fire');
-    store.dispatch(addLine(events.fireEnable.line, getTimeElapsed()));
-    store.dispatch(enableFire());
-    delete events.fireEnable;
+  if (!events.fireEnable.done && ready(inventory, events.fireEnable.req)) {
+    events.fireEnable.action();
+    events.fireEnable.done = true;
+  }
+
+  if (!events.trapsEnable.done && ready(inventory, events.trapsEnable.req)) {
+    events.trapsEnable.action();
+    events.trapsEnable.done = true;
   }
 }
 
-export {
-  tick
-}
+export {tick}
