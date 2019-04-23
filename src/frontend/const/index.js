@@ -1,6 +1,6 @@
 module.exports = {
   delta: 500,
-  saveFreq: 30000,
+  saveFreq: 15000,
   log: false,
   dark: false
 }
