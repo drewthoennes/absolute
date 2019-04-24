@@ -45,7 +45,6 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.4.14",
-    "nodemailer": "^5.1.1",
     "path": "^0.12.7",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",

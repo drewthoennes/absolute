@@ -23,7 +23,7 @@ let events = {
   },
   trapsEnable: {
     req: {
-      wood: 50  //Return to 50 woods
+      wood: 30  //Return to 50 woods
     },
     action: () => {
       let line = 'Traps can catch what you cannot.';
@@ -88,7 +88,7 @@ let events = {
           //Todo: Build Dis_Fire method to disable the fire.
       //}
 
-      
+
       store.dispatch(addLine("The strange figure approaches.", getTimeElapsed() + 30));
       store.dispatch(addLine("It demands payment.", getTimeElapsed() + 33));
       store.dispatch(addLine(payment + " gold will do, for now...", getTimeElapsed() + 36));
@@ -100,7 +100,7 @@ let events = {
   takePayment: {
     interval:{
       time: 300//same a interval.time for demandpayment
-    }, 
+    },
     action: () => {
       console.log("taking");
       let payment = Math.floor((getTimeElapsed() - 39) / 150 + 10);
@@ -114,7 +114,7 @@ let events = {
         //store.dispatch(decGold(store.getState().interval.gold.quantity))
         console.log("you die");
       }
-      
+
     }
 
   }
