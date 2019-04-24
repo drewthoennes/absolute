@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
-import StonyPathComponent from './stonyPath';
+import TradePostComponent from './tradePost';
 
 const mapStateToProps = state => {
   return {
@@ -9,6 +9,6 @@ const mapStateToProps = state => {
   }
 }
 
-const StonyPath = connect(mapStateToProps, null, null, {forwardRef: true})(StonyPathComponent);
+const TradePost = connect(mapStateToProps, null, null, {forwardRef: true})(TradePostComponent);
 
-export default StonyPath;
+export default TradePost;

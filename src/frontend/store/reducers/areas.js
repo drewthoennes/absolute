@@ -3,7 +3,9 @@ import {
   SET_AREAS,
   UPDATE_DARK_WOODS,
   EN_STONY_PATH,
-  UPDATE_STONY_PATH
+  UPDATE_STONY_PATH,
+  EN_TRADE_POST,
+  UPDATE_TRADE_POST
 } from '@/const/store';
 
 let defaultState = {
@@ -22,8 +24,8 @@ let defaultState = {
     state: {},
     time: ''
   },
-  tradingPost: {
-    enabled: false,
+  tradePost: {
+    enabled: true,
     state: {},
     time: ''
   }
@@ -62,6 +64,24 @@ export default class areas {
           return Object.assign({}, state, {
             stonyPath: {
               enabled: state.stonyPath.enabled,
+              state: action.data,
+              time: new Date().getTime()
+            }
+          });
+        
+        case EN_TRADE_POST:
+          return Object.assign({}, state, {
+            tradePost: {
+              enabled: true,
+              state: state.tradePost.state,
+              time: state.tradePost.time
+            }
+          });
+
+        case UPDATE_TRADE_POST:
+          return Object.assign({}, state, {
+            tradePost: {
+              enabled: state.tradePost.enabled,
               state: action.data,
               time: new Date().getTime()
             }

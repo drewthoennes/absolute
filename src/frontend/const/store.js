@@ -17,7 +17,9 @@ module.exports = {
   SET_AREAS: 'set_areas', // Areas
   UPDATE_DARK_WOODS: 'update_dark_woods',
   UPDATE_STONY_PATH: 'update_stony_path',
+  UPDATE_TRADE_POST: 'update_trade_post',
   EN_STONY_PATH: 'enable_stony_path',
+  EN_TRADE_POST: 'enable_trade_post',
   SET_PROGRESS: 'set_progress', // Progress
   GET_TIME: 'get_time'
 }

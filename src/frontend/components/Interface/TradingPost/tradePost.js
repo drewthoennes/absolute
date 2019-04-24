@@ -16,7 +16,7 @@ import {
 
 import CooldownButton from '@/components/CooldownButton';
 
-export default class StonyPath extends React.Component {
+export default class TradePost extends React.Component {
   constructor(props) {
     super(props);
 
@@ -66,7 +66,7 @@ export default class StonyPath extends React.Component {
     }
 
     return (
-      <div id="stony-path">
+      <div id="trade-post">
         {checkTrapsButton}
       </div>
     );

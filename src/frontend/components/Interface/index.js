@@ -9,6 +9,7 @@ import {updateDarkWoods, updateStonyPath} from '@/store/actions';
 import CooldownButton from '@/components/CooldownButton';
 import DarkWoods from '@/components/Interface/DarkWoods'
 import StonyPath from '@/components/Interface/StonyPath';
+import TradePost from '@/components/Interface/TradingPost';
 
 export default class Interface extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class Interface extends React.Component {
 
     this.darkWoods = React.createRef();
     this.stonyPath = React.createRef();
+    this.tradePost = React.createRef();
 
     this.state = {
       areas: ['Dark Woods', 'Stony Path', 'Abandoned Mine', 'Trading Post'],
@@ -41,6 +43,11 @@ export default class Interface extends React.Component {
         this.setState({data: this.stonyPath.current.tick()});
         break;
 
+      case 'Trading Post':
+        console.log("Updating Trading post")
+        this.setState({data: this.tradePost.current.tick()});
+        break;
+
       default:
         log('Interface: No area to tick');
     }
@@ -58,6 +65,7 @@ export default class Interface extends React.Component {
     }
     else if (this.state.areas == 'Trading Post') {
       // Updating Trading Post
+      store.dispatch(updateTradePost(this.state.data));
     }
 
     this.setState({area: area}, () => {
@@ -72,6 +80,7 @@ export default class Interface extends React.Component {
       }
       else if (this.state.areas == 'Trading Post') {
         // Updating Trading Post
+        this.tradePost.current.init(store.getState().areas.tradePost);
       }
     });
   }
@@ -89,7 +98,7 @@ export default class Interface extends React.Component {
     if (areas.abandonedMine.enabled) {
       unlocked.push('Abandoned Mine');
     }
-    if (areas.tradingPost.enabled) {
+    if (areas.tradePost.enabled) {
       unlocked.push('Trading Post');
     }
 
@@ -112,7 +121,10 @@ export default class Interface extends React.Component {
       area = '';
     }
     else if (this.state.area === 'Trading Post') {
-      area = '';
+      area = (
+        <TradePost ref={this.tradePost}/>
+      );
+      //area = '';
     }
 
 
