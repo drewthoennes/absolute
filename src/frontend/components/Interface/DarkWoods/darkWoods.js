@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles.scss';
 import c from '@/const';
-import {log, getTimeElapsed, formatCostTooltip, hasInventory} from '@/utils';
+import {log, getTimeElapsed, formatCostTooltip, hasInventory, chance} from '@/utils';
 import store from '@/store';
 import {
   incWood,
@@ -60,7 +60,10 @@ export default class DarkWoods extends React.Component {
 
   gatherWood() {
     store.dispatch(incWood());
-    store.dispatch(addLine('Random sticks and twigs cover the dimly lit forrest floor', getTimeElapsed() + 1));
+
+    if (chance(0.2)) {
+      store.dispatch(addLine('Random sticks and twigs cover the dimly lit forrest floor.', getTimeElapsed() + 1));
+    }
   }
 
   stoakFire() {

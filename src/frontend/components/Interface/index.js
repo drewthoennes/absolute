@@ -115,8 +115,6 @@ export default class Interface extends React.Component {
       area = '';
     }
 
-
-
     return (
       <div id="interface">
         <div className="areas">
