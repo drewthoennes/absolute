@@ -12,7 +12,9 @@ import {
   addLine,
   incTraps,
   incFurs,
-  decFurs
+  decFurs,
+  incClaws,
+  decClaws
 } from '@/store/actions';
 
 
@@ -26,6 +28,7 @@ export default class TradePost extends React.Component {
     
     this.sellWoodButton = React.createRef();
     this.sellFursButton = React.createRef();
+    this.sellClawsButton = React.createRef();
 
     this.init = this.init.bind(this);
 
@@ -36,7 +39,8 @@ export default class TradePost extends React.Component {
     let state = {
       
       sellWoodButton: this.sellWoodButton.current ? this.sellWoodButton.current.tick() : undefined,
-      sellFursButton: this.sellFursButton.current ? this.sellFursButton.current.tick() : undefined
+      sellFursButton: this.sellFursButton.current ? this.sellFursButton.current.tick() : undefined,
+      sellClawsButton: this.sellClawsButton.current ? this.sellClawsButton.current.tick() : undefined
     };
 
     return state;
@@ -51,6 +55,7 @@ export default class TradePost extends React.Component {
 
     this.sellWoodButton.current.init(data.state.sellWoodButton, data.time);
     this.sellFursButton.current.init(data.state.sellFursButton, data.time);
+    this.sellClawsButton.current.init(data.state.sellClawsButton, data.time);
   }
 
   
@@ -68,6 +73,14 @@ export default class TradePost extends React.Component {
     if(store.getState().inventory.furs.quantity >= cost){
       store.dispatch(incGold(1))
       store.dispatch(decFurs(cost))
+    }
+  }
+
+  sellClaws() {
+    let cost = 6
+    if(store.getState().inventory.claws.quantity >= cost){
+      store.dispatch(incGold(1))
+      store.dispatch(decClaws(cost))
     }
   }
 
@@ -105,12 +118,27 @@ export default class TradePost extends React.Component {
       sellFursButton = '';
     }
 
-    
+    let claws = this.props.inventory.claws;
+    let sellClawsButton;
+    if (claws.visible){
+      sellClawsButton = (
+        <CooldownButton
+          ref={this.sellClawsButton}
+          cooldown="2000"
+          tooltip={"6 claws"}
+          enabled={store.getState().inventory.claws.quantity >= 6}//hasInventory(fire.cost)}
+          text="Sell Claws"
+          cb={this.sellClaws}/>
+      );
+    }else {
+      sellClawsButton = '';
+    }
 
     return (
       <div id="trade-post">
         {sellWoodButton}
         {sellFursButton}
+        {sellClawsButton}
       </div>
     );
   }
