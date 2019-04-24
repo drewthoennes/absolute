@@ -12,7 +12,9 @@ import {
   DEC_FURS,
   EN_CLAWS,
   INC_CLAWS,
-  DEC_CLAWS
+  DEC_CLAWS,
+  INC_GOLD,
+  DEC_GOLD
 } from '@/const/store';
 
 export const setInventory = store => ({

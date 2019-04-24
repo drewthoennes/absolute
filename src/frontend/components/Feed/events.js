@@ -7,11 +7,12 @@ import {
   enableStonyPath,
   demandPayment
 } from '@/store/actions';
+import { decGold } from '../../store/actions/inventory';
 
 let events = {
   fireEnable: {
     req: {
-      wood: 5 //Return to 15 wood
+      wood: 15 //Return to 15 wood
     },
     action: () => {
       let line = 'Wood can be used to start a fire to attract others.';
@@ -21,7 +22,7 @@ let events = {
   },
   trapsEnable: {
     req: {
-      wood: 10  //Return to 50 woods
+      wood: 50  //Return to 50 woods
     },
     action: () => {
       let line = 'Traps can catch what you cannot.';
@@ -39,6 +40,17 @@ let events = {
       store.dispatch(enableStonyPath());
     }
   },
+  stonyPathEnable: {
+    req: {
+      traps: 1
+    },
+    action: () => {
+      let line = 'You discover a small path not far from the clearing.';
+      store.dispatch(addLine(line, getTimeElapsed()));
+      store.dispatch(enableStonyPath());
+    }
+  },
+  
   demandPayment: {
     req:{
       getTimeElapsed: 30 //Currently obsolete
@@ -47,8 +59,9 @@ let events = {
       time: 300
     },
     action: () => {
-
-
+      console.log("demanding");
+      let payment = Math.floor(getTimeElapsed() / 150 + 10);
+      console.log(payment);
       store.dispatch(addLine("Twightlight is falling.", getTimeElapsed()));
       let random = Math.floor(Math.random() * 3);
       //store.dispatch(addLine(random, getTimeElapsed() + 1));
@@ -63,8 +76,11 @@ let events = {
       //  store.dispatch(addLine("The fire suddenly goes out", getTimeElapsed + 4));
           //Todo: Build Dis_Fire method to disable the fire.
       //}
-      store.dispatch(addLine("The strange figure approaches", getTimeElapsed() + 30));
 
+      
+      store.dispatch(addLine("The strange figure approaches.", getTimeElapsed() + 30));
+      store.dispatch(addLine("It demands payment.", getTimeElapsed() + 33));
+      store.dispatch(addLine(payment + " gold will do, for now...", getTimeElapsed() + 36));
       //store.dispatch(addLine("The strange figure approaches", getTimeElapsed() + 20));
       //store.dispatch(addLine("you don't scare me!" + getTimeElapsed(), getTimeElapsed() + 2));
     }
@@ -75,7 +91,15 @@ let events = {
       time: 300//same a interval.time for demandpayment
     }, 
     action: () => {
-      store.dispatch(addLine("Twightlight is falling.", getTimeElapsed()));
+      console.log("taking");
+      let payment = Math.floor((getTimeElapsed() - 39) / 150 + 10);
+      console.log("take " + payment);
+      if(store.getState().inventory.gold.quantity >= payment){
+        store.dispatch(decGold(payment));
+      }else{
+        console.log("you die");
+      }
+      
     }
 
   }
@@ -123,6 +147,15 @@ function tick() {
     events.demandPayment.done = true;
   }else if(lastTime != getTimeElapsed()){
     events.demandPayment.done = false;
+  }
+
+  if (getTimeElapsed()%events.takePayment.interval.time == events.takePayment.interval.time - 1 && !events.takePayment.done) {
+    events.takePayment.action();
+    events.takePayment.done = true;
+    lastTime = getTimeElapsed();
+    events.takePayment.done = true;
+  }else if(lastTime != getTimeElapsed()){
+    events.takePayment.done = false;
   }
 
 }

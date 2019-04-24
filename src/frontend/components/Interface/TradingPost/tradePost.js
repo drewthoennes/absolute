@@ -17,12 +17,13 @@ import {
 
 
 import CooldownButton from '@/components/CooldownButton';
+import { incGold } from '../../../store/actions/inventory';
 
 export default class TradePost extends React.Component {
   constructor(props) {
     super(props);
 
-    this.checkTrapsButton = React.createRef();
+    
     this.sellWoodButton = React.createRef();
     this.sellFursButton = React.createRef();
 
@@ -33,7 +34,7 @@ export default class TradePost extends React.Component {
 
   tick() {
     let state = {
-      checkTrapsButton: this.checkTrapsButton.current ? this.checkTrapsButton.current.tick() : undefined,
+      
       sellWoodButton: this.sellWoodButton.current ? this.sellWoodButton.current.tick() : undefined,
       sellFursButton: this.sellFursButton.current ? this.sellFursButton.current.tick() : undefined
     };
@@ -46,62 +47,32 @@ export default class TradePost extends React.Component {
       return;
     }
 
-    // Initialize all cooldown buttons to their correct positions
-    if (this.checkTrapsButton.current && data.state.checkTrapsButton) {
-      this.checkTrapsButton.current.init(data.state.checkTrapsButton, data.time);
-    }
+    
 
     this.sellWoodButton.current.init(data.state.sellWoodButton, data.time);
     this.sellFursButton.current.init(data.state.sellFursButton, data.time);
   }
 
-  checkTraps() {
-    // Add to claws and furs
-    store.dispatch(addLine('You gather small bits of fur and claws to use later.', getTimeElapsed() + 1));
-    store.dispatch(incFurs());
-    // Random chance of traps breaking
-  }
+  
 
   sellWood() {
-    // Add to claws and furs
-    //store.dispatch(addLine('1 wood sold', getTimeElapsed() + 1));
-    let cost = 4
-    console.log(store.get)
-
-    //if(store.dispatch(getWood()) > 4){
-    //  console.log("enough!");
-    //}
-    //console.log(store.dispatch(decWood(10)));
-    // Random chance of traps breaking
+    let cost = 12
+    if(store.getState().inventory.wood.quantity >= cost){
+      store.dispatch(incGold(1))
+      store.dispatch(decWood(cost))
+    }
   }
 
   sellFurs() {
-    // Add to claws and furs
-    //store.dispatch(addLine('1 wood sold', getTimeElapsed() + 1));
     let cost = 4
-    console.log(store.get)
-
-    //if(store.dispatch(getWood()) > 4){
-    //  console.log("enough!");
-    //}
-    //console.log(store.dispatch(decWood(10)));
-    // Random chance of traps breaking
+    if(store.getState().inventory.furs.quantity >= cost){
+      store.dispatch(incGold(1))
+      store.dispatch(decFurs(cost))
+    }
   }
 
   render() {
-    let traps = this.props.inventory.traps;
-    let checkTrapsButton;
-    if (traps.visible) {
-      checkTrapsButton = (
-       <CooldownButton ref={this.checkTrapsButton} cooldown="20000" text="Check traps" enabled={traps.quantity > 0} cb={this.checkTraps}/>
-      );
-    }
-    else {
-      checkTrapsButton = '';
-    }
-
-
-    
+      
     let wood = this.props.inventory.wood;
     let sellWoodButton;
     if (wood.visible){
@@ -109,8 +80,8 @@ export default class TradePost extends React.Component {
         <CooldownButton
           ref={this.sellWoodButton}
           cooldown="2000"
-          tooltip={3}//formatCostTooltip(fire.cost)}
-          enabled={true}//hasInventory(fire.cost)}
+          tooltip={"12 wood"}//Needs to not be hard coded in
+          enabled={store.getState().inventory.wood.quantity >= 12}//hasInventory(fire.cost)}
           text="Sell Wood"
           cb={this.sellWood}/>
       );
@@ -125,8 +96,8 @@ export default class TradePost extends React.Component {
         <CooldownButton
           ref={this.sellFursButton}
           cooldown="2000"
-          tooltip={3}//formatCostTooltip(fire.cost)}
-          enabled={true}//hasInventory(fire.cost)}
+          tooltip={"4 furs"}
+          enabled={store.getState().inventory.furs.quantity >= 4}//hasInventory(fire.cost)}
           text="Sell Furs"
           cb={this.sellFurs}/>
       );
@@ -138,7 +109,6 @@ export default class TradePost extends React.Component {
 
     return (
       <div id="trade-post">
-        {checkTrapsButton}
         {sellWoodButton}
         {sellFursButton}
       </div>
