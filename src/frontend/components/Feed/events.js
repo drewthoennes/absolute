@@ -41,10 +41,13 @@ let events = {
   },
   demandPayment: {
     req:{
-      wood: 3
+      getTimeElapsed: 30
     },
     action: () => {
       store.dispatch(addLine("testing", getTimeElapsed()));
+      store.dispatch(addLine("your doom is here", getTimeElapsed()));
+      store.dispatch(addLine("you don't scare me!", getTimeElapsed() + 1));
+      store.dispatch(addLine("I here to save you!", getTimeElapsed() + 2));
       store.dispatch(enableStonyPath());
     }
 
@@ -79,7 +82,7 @@ function tick() {
     events.stonyPathEnable.done = true;
   }
 
-  if (!events.demandPayment.done && ready(inventory, events.demandPayment.req)) {
+  if (getTimeElapsed()%6 == 0) {
     events.demandPayment.action();
     events.demandPayment.done = true;
   }
