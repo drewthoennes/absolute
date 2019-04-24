@@ -36,14 +36,18 @@ export default class DarkWoods extends React.Component {
   tick() {
     let state = {
       gatherWoodButton: this.gatherWoodButton.current.tick(),
-      stoakFireButton: this.stoakFireButton.current ? this.stoakFireButton.current.tick() : '', // Prevents calling tick before fire is enabled
-      makeTrapButton: this.makeTrapButton.current ? this.makeTrapButton.current.tick() : ''
+      stoakFireButton: this.stoakFireButton.current ? this.stoakFireButton.current.tick() : undefined, // Prevents calling tick before fire is enabled
+      makeTrapButton: this.makeTrapButton.current ? this.makeTrapButton.current.tick() : undefined
     }
 
     return state;
   }
 
   init(data) {
+    if (Object.keys(data.state).length == 0) {
+      return;
+    }
+
     // Initialize all cooldown buttons to their correct positions
     this.gatherWoodButton.current.init(data.state.gatherWoodButton, data.time);
     if (this.stoakFireButton.current) {

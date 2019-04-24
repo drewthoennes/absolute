@@ -2,7 +2,8 @@ import {getGameState} from '@/utils';
 import {
   SET_AREAS,
   UPDATE_DARK_WOODS,
-  EN_STONY_PATH
+  EN_STONY_PATH,
+  UPDATE_STONY_PATH
 } from '@/const/store';
 
 let defaultState = {
@@ -54,6 +55,15 @@ export default class areas {
               enabled: true,
               state: state.stonyPath.state,
               time: state.stonyPath.time
+            }
+          });
+
+        case UPDATE_STONY_PATH:
+          return Object.assign({}, state, {
+            stonyPath: {
+              enabled: state.stonyPath.enabled,
+              state: action.data,
+              time: new Date().getTime()
             }
           });
 

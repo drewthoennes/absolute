@@ -42,7 +42,8 @@ module.exports = function(router) {
 
         res.json({
           'message': 'Successfully authenticated',
-          'token': token
+          'token': token,
+          'username': user.username
         });
       });
     });

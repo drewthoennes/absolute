@@ -12,6 +12,27 @@ body {
     pointer-events: none;
 }
 
+.tooltip-top[tooltip]:before {
+    content: attr(tooltip);
+    position: absolute;
+    opacity: 0;
+    padding: 5px;
+    border: 1px solid black;
+    z-index: 2;
+}
+
+.tooltip-top[tooltip]:hover:before {
+    opacity: 1;
+    background: white;
+    margin-top: -35px;
+    margin-left: -1px;
+    -webkit-animation: fadein 1s;
+    -moz-animation: fadein 0.2s;
+    -ms-animation: fadein 0.2s;
+    -o-animation: fadein 0.2s;
+    animation: fadein 0.2s;
+}
+
 .no-ingredients[tooltip]:before {
     content: attr(tooltip);
     position: absolute;
@@ -26,6 +47,7 @@ body {
     opacity: 1;
     background: white;
     margin-top: 35px;
+    margin-left: -1px;
     -webkit-animation: fadein 1s;
     -moz-animation: fadein 0.2s;
     -ms-animation: fadein 0.2s;
@@ -46,6 +68,7 @@ body {
     opacity: 1;
     background: white;
     margin-top: 35px;
+    margin-left: -1px;    
     -webkit-animation: fadein 1s;
     -moz-animation: fadein 0.2s;
     -ms-animation: fadein 0.2s;

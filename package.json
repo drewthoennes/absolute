@@ -6,8 +6,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --config config/webpack.dev.config.js",
-    "build": "webpack --mode production --config config/webpack.prod.config.js",
-    "start": "npm run build && node server.js",
+    "full-build": "webpack --mode production --config config/webpack.prod.config.js",
+    "start": "npm run full-build && node server.js",
     "clean": "rm -r ./dist/*"
   },
   "keywords": [],
