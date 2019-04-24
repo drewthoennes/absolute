@@ -1,5 +1,6 @@
 module.exports = {
-  GET_WOOD: 'get_wood', // Inventory
+  SET_INVENTORY: 'set_inventory', // Inventory
+  GET_WOOD: 'get_wood',
   INC_WOOD: 'inc_wood',
   DEC_WOOD: 'dec_wood',
   INC_FURS: 'inc_furs',
@@ -10,8 +11,12 @@ module.exports = {
   EN_TRAPS: 'enable_traps',
   INC_TRAPS: 'inc_traps',
   DEC_TRAPS: 'dec_traps',
-  ADD_LINE: 'add_line', // Dialogue
+  SET_DIALOGUE: 'set_dialogue', // Dialogue
+  ADD_LINE: 'add_line',
   DELETE_LINES: 'delete_lines',
-  UPDATE_DARK_WOODS: 'update_dark_woods', // Areas
-  EN_STONY_PATH: 'enable_stony_path'
+  SET_AREAS: 'set_areas', // Areas
+  UPDATE_DARK_WOODS: 'update_dark_woods',
+  EN_STONY_PATH: 'enable_stony_path',
+  SET_PROGRESS: 'set_progress', // Progress
+  GET_TIME: 'get_time'
 }

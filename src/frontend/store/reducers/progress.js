@@ -1,35 +1,28 @@
-import {getGameState} from '@/utils';
-import {} from '@/const/store';
-
-let GET_TIME = 'get_time';
+import {SET_PROGRESS, GET_TIME} from '@/const/store';
 
 const defaultState = {
   start: new Date().getTime()
 }
 
-let initialState;
+export default class progress {
+  constructor(state = defaultState) {
+    this.initialState = state;
+  }
 
-let save = getGameState();
-if (save && save.inventory) {
-  initialState = save.progress;
+  load() {
+    return (state = this.initialState, action) => {
+      switch (action.type) {
+        case SET_PROGRESS:
+          // return action.store;
+          return action.store;
 
-  // Change start to correct time
-  let now = new Date().getTime();
-  initialState.start = now - (save.progress.stop - save.progress.start);
-}
-else {
-  initialState = defaultState;
-}
+        case GET_TIME:
+          let now = new Date().getTime();
+          return state.start - now;
 
-const progress = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_TIME:
-      let now = new Date().getTime();
-      return state.start - now;
-
-    default:
-      return state
+        default:
+          return state
+      }
+    }
   }
 }
-
-export default progress

@@ -4,7 +4,14 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import axios from 'axios';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import store from '@/store';
+import {
+  setAreas,
+  setDialogue,
+  setInventory,
+  setProgress
+} from '@/store/actions';
 import './styles.scss';
 
 export default class LoginModal extends React.Component {
@@ -119,11 +126,43 @@ export default class LoginModal extends React.Component {
         this.setState({loginError: 'Invalid server response'});
       }
       else {
-        localStorage.setItem('token', res.data.token);
+        // Get game
+        let token = res.data.token;
+        axios.get('/api/game', {
+          headers: {
+            Authorization: 'Bearer ' + res.data.token
+          }
+        }).then(res => {
+          if (res.data.game && res.data.game.inventory) { // Hardcoded value to check if game is valid
+            let promises = [];
 
-        this.props.handleLogin();
-        this.handleCloseModal();
-        this.setState({loginError: ''});
+            promises.push(new Promise((resolve, reject) => {
+              store.dispatch(setAreas(res.data.game.areas));
+            }));
+            promises.push(new Promise((resolve, reject) => {
+              store.dispatch(setDialogue(res.data.game.dialogue));
+            }));
+            promises.push(new Promise((resolve, reject) => {
+              store.dispatch(setInventory(res.data.game.inventory));
+            }));
+            promises.push(new Promise((resolve, reject) => {
+              store.dispatch(setProgress(res.data.game.progress));
+            }));
+
+            Promise.all(promises); // Can't resolve this for some reason, so we risk it for the biscuit
+
+            localStorage.setItem('token', token);
+            this.props.handleLogin();
+            this.handleCloseModal();
+            this.setState({loginError: ''});
+          }
+          else {
+            localStorage.setItem('token', token);
+            this.props.handleLogin();
+            this.handleCloseModal();
+            this.setState({loginError: ''});
+          }
+        });
       }
     });
   }

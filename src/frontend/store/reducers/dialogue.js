@@ -1,14 +1,8 @@
-import {getGameState} from '@/utils';
 import {
+  SET_DIALOGUE,
   ADD_LINE,
   DELETE_LINES
 } from '@/const/store';
-
-/*
-  The forrest beckons you
-  The fire roars
-
-*/
 
 const defaultState = {
   lines: {
@@ -20,39 +14,39 @@ const defaultState = {
   completed: []
 }
 
-let initialState;
+export default class dialogue {
+  constructor(state = defaultState) {
+    this.initialState = state;
+  }
 
-let save = getGameState();
-if (save && save.dialogue) {
-  initialState = save.dialogue
-}
-else {
-  initialState = defaultState;
-}
+  load() {
+    return (state = this.initialState, action) => {
+      switch (action.type) {
+        case SET_DIALOGUE:
+          // return action.store;
+          return action.store;
 
-const dialogue = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_LINE:
-      let newState = Object.assign({}, state, {});
-      if (!newState.lines[action.time]) {
-        let arr = [];
-        arr.push(action.line);
-        newState.lines[action.time] = arr;
+        case ADD_LINE:
+          let newState = Object.assign({}, state, {});
+          if (!newState.lines[action.time]) {
+            let arr = [];
+            arr.push(action.line);
+            newState.lines[action.time] = arr;
+          }
+          else {
+            newState.lines[action.time].push(action.line);
+          }
+
+          return newState;
+
+        case DELETE_LINES:
+          // Mutates state
+          delete state.lines[action.time];
+          return state;
+
+        default:
+          return state
       }
-      else {
-        newState.lines[action.time].push(action.line);
-      }
-
-      return newState;
-
-    case DELETE_LINES:
-      // Mutates state
-      delete state.lines[action.time];
-      return state;
-
-    default:
-      return state
+    }
   }
 }
-
-export default dialogue

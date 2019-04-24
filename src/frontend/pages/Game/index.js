@@ -1,6 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import './styles.scss';
+import store from '@/store';
+import {
+  setAreas,
+  setDialogue,
+  setInventory,
+  setProgress
+} from '@/store/actions';
 
 import Loop from '@/components/Loop';
 import BottomBar from '@/components/BottomBar';
@@ -20,6 +28,38 @@ export default class Game extends React.Component {
 
     this.state = {
     };
+  }
+
+  componentDidMount() {
+    let token = localStorage.getItem('token');
+
+    // Try to load game state from server
+    if (token) {
+      axios.get('/api/game', {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }).then(res => {
+        if (res.data.game && res.data.game.inventory) { // Hardcoded value to check if game is valid
+          let promises = [];
+
+          promises.push(new Promise((resolve, reject) => {
+            store.dispatch(setAreas(res.data.game.areas));
+          }));
+          promises.push(new Promise((resolve, reject) => {
+            store.dispatch(setDialogue(res.data.game.dialogue));
+          }));
+          promises.push(new Promise((resolve, reject) => {
+            store.dispatch(setInventory(res.data.game.inventory));
+          }));
+          promises.push(new Promise((resolve, reject) => {
+            store.dispatch(setProgress(res.data.game.progress));
+          }));
+
+          Promise.all(promises); // Can't resolve this for some reason, so we risk it for the biscuit
+        }
+      });
+    }
   }
 
   openLoginModal() {

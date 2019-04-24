@@ -1,4 +1,5 @@
 import {
+  SET_INVENTORY,
   GET_WOOD,
   INC_WOOD,
   DEC_WOOD,
@@ -9,6 +10,11 @@ import {
   INC_FURS,
   DEC_FURS
 } from '@/const/store';
+
+export const setInventory = store => ({
+  type: SET_INVENTORY,
+  store
+});
 
 export const getWood = () => ({
   type: GET_WOOD

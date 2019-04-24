@@ -30,7 +30,9 @@ export default class Loop extends React.Component {
   handleLogout() {
     this.setState({loggedIn: false});
     localStorage.removeItem('token');
-    this.props.handleLogout();
+    localStorage.removeItem('gameState');
+    window.location.reload();
+    // this.props.handleLogout();
   }
 
   render() {

@@ -59,6 +59,7 @@ function hasInventory(cost) {
   }
 }
 
+
 function saveGameState(loggedIn = false) {
   console.log('Saving game state (' + loggedIn + ')');
 
@@ -75,7 +76,6 @@ function saveGameState(loggedIn = false) {
         Authorization: 'Bearer ' + token
       }
     }).then(res => {
-      console.log(res.data);
       // Show saved button in bottom bar
     });
   }
