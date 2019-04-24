@@ -82,11 +82,6 @@ function tick() {
     events.stonyPathEnable.done = true;
   }
 
-  if (getTimeElapsed()%6 == 0) {
-    events.demandPayment.action();
-    events.demandPayment.done = true;
-  }
-
 }
 
 export {tick}

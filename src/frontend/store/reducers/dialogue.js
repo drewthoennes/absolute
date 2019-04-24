@@ -40,10 +40,9 @@ const dialogue = (state = initialState, action) => {
         newState.lines[action.time] = arr;
       }
       else {
-        console.log(action.time + "  |  " + action.line)
         newState.lines[action.time].push(action.line);
-        
       }
+
       return newState;
 
     case DELETE_LINES:

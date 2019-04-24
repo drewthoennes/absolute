@@ -41,8 +41,6 @@ export default class StonyPath extends React.Component {
   }
 
   checkTraps() {
-    console.log('checkTraps clicked');
-
     // Add to claws and furs
     store.dispatch(addLine('You gather small bits of fur and claws to use later.', getTimeElapsed() + 1));
     store.dispatch(incFurs());

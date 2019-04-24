@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import c from '@/const';
 import store from '@/store';
 
@@ -58,15 +59,29 @@ function hasInventory(cost) {
   }
 }
 
-function saveGameState() {
-  console.log('Saving game state');
+function saveGameState(loggedIn = false) {
+  console.log('Saving game state (' + loggedIn + ')');
 
   let state = store.getState();
-
   state.progress.stop = new Date().getTime();
   state.dialogue.completed = [];
 
-  localStorage.setItem('gameState', JSON.stringify(state));
+  if (loggedIn) { // Push to the database
+    let token = localStorage.getItem('token');
+    axios.post('/api/game', {
+      game: state
+    }, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    }).then(res => {
+      console.log(res.data);
+      // Show saved button in bottom bar
+    });
+  }
+  else { // Store in the browser
+    localStorage.setItem('gameState', JSON.stringify(state));
+  }
 }
 
 function getGameState() {

@@ -5,6 +5,7 @@ import {log, getTimeElapsed} from '@/utils';
 import store from '@/store';
 import {completedLine, deleteLines} from '@/store/actions';
 import {tick} from './events';
+import c from '@/const';
 
 let lastSecond = 0;
 let hasPrinted = false;
@@ -16,8 +17,7 @@ export default class Feed extends React.Component {
     this.printLines = this.printLines.bind(this);
 
     this.state = {
-      lines: [],
-      maxLines : 15
+      lines: []
     }
 
     this.getOldLines();
@@ -49,8 +49,8 @@ export default class Feed extends React.Component {
       let concat = this.state.lines.reverse().concat(lines).reverse();
 
       // Trucate feed
-      if (concat.length > this.state.maxLines) {
-        concat = concat.slice(0, this.state.maxLines);
+      if (concat.length > c.maxFeedLength) {
+        concat = concat.slice(0, c.maxFeedLength);
       }
       this.setState({
         lines: concat
@@ -85,8 +85,8 @@ export default class Feed extends React.Component {
     hasPrinted = true;
 
     // Truncate feed
-    if (toPrint.length > this.state.maxLines) {
-      toPrint = toPrint.slice(0, this.state.maxLines);
+    if (toPrint.length > c.maxFeedLength) {
+      toPrint = toPrint.slice(0, c.maxFeedLength);
     }
 
     this.state.lines = toPrint.reverse();
@@ -100,7 +100,7 @@ export default class Feed extends React.Component {
 
     let fade;
     // Only show fade if the feed has reached the bottom
-    if (this.state.maxLines == this.state.lines.length) {
+    if (c.maxFeedLength == this.state.lines.length) {
       fade = (
         <div className="fade"></div>
       );
