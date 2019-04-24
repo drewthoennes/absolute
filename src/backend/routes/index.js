@@ -8,6 +8,8 @@ module.exports = function() {
     res.json({message: config.name + ' API'});
   });
 
+  require('./auth')(router);
+  require('./game')(router);
   require('./error')(router);
 
   return router;
