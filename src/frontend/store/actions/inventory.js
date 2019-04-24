@@ -7,8 +7,12 @@ import {
   EN_TRAPS,
   INC_TRAPS,
   DEC_TRAPS,
+  EN_FURS,
   INC_FURS,
-  DEC_FURS
+  DEC_FURS,
+  EN_CLAWS,
+  INC_CLAWS,
+  DEC_CLAWS
 } from '@/const/store';
 
 export const setInventory = store => ({
@@ -48,6 +52,10 @@ export const decTraps = (val) => ({
   val
 });
 
+export const enableFurs = () => ({
+  type: EN_FURS
+});
+
 export const incFurs = (val) => ({
   type: INC_FURS,
   val
@@ -57,6 +65,21 @@ export const decFurs = (val) => ({
   type: DEC_FURS,
   val
 });
+
+export const enableClaws = () => ({
+  type: EN_CLAWS
+});
+
+export const incClaws = (val) => ({
+  type: INC_CLAWS,
+  val
+});
+
+export const decClaws = (val) => ({
+  type: DEC_CLAWS,
+  val
+});
+
 
 export const incGold = (val) => ({
   type: INC_GOLD,

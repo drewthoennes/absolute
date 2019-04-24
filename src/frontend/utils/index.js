@@ -92,6 +92,10 @@ function getGameState() {
   return JSON.parse(localStorage.getItem('gameState'));
 }
 
+function chance(percent) {
+  return Math.random() <= percent;
+}
+
 export {
   log,
   getTimeElapsed,
@@ -99,5 +103,6 @@ export {
   formatCostTooltip,
   hasInventory,
   saveGameState,
-  getGameState
+  getGameState,
+  chance
 }

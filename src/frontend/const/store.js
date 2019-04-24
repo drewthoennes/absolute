@@ -3,6 +3,7 @@ module.exports = {
   GET_WOOD: 'get_wood',
   INC_WOOD: 'inc_wood',
   DEC_WOOD: 'dec_wood',
+  EN_FURS: 'en_furs',
   INC_FURS: 'inc_furs',
   DEC_FURS: 'dec_furs',
   INC_GOLD: 'inc_gold',
@@ -11,6 +12,9 @@ module.exports = {
   EN_TRAPS: 'enable_traps',
   INC_TRAPS: 'inc_traps',
   DEC_TRAPS: 'dec_traps',
+  EN_CLAWS: 'en_claws',
+  INC_CLAWS: 'inc_claws',
+  DEC_CLAWS: 'dec_claws',
   SET_DIALOGUE: 'set_dialogue', // Dialogue
   ADD_LINE: 'add_line',
   DELETE_LINES: 'delete_lines',
