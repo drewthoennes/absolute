@@ -58,7 +58,7 @@ let events = {
         store.dispatch(addLine("Your fingers start to go numb.", getTimeElapsed() + 14));
       }else if (random == 2){
         store.dispatch(addLine("You hear the bleating of lambs in the distance", getTimeElapsed() + 6));
-        
+      }
       //}else if (random == 3){
       //  store.dispatch(addLine("The fire suddenly goes out", getTimeElapsed + 4));
           //Todo: Build Dis_Fire method to disable the fire.  
