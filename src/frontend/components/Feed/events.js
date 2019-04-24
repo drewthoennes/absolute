@@ -51,7 +51,7 @@ let events = {
 
       store.dispatch(addLine("Twightlight is falling.", getTimeElapsed()));
       let random = Math.floor(Math.random() * 3);
-      store.dispatch(addLine(random, getTimeElapsed() + 1));
+      //store.dispatch(addLine(random, getTimeElapsed() + 1));
       if(random == 0){
         store.dispatch(addLine("A chill runs down your spine.", getTimeElapsed() + 10));
       }else if (random == 1){
