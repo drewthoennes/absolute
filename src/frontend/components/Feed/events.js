@@ -85,7 +85,6 @@ function tick() {
   
   let lastTime;
 
-<<<<<<< HEAD
   if(!lastTime){
     lastTime = -1;
   }
@@ -99,8 +98,6 @@ function tick() {
     events.demandPayment.done = false;
   }
 
-=======
->>>>>>> e96e877e90406d7ce2385accec970c30365d2f3e
 }
 
 export {tick}
