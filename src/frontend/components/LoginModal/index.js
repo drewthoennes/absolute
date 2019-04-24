@@ -51,22 +51,52 @@ export default class LoginModal extends React.Component {
           password: {
             padding: '10px',
             marginTop: '5px',
+            marginBottom: '5px',
             fontSize: '12px'
+          },
+          login: {
+            marginTop: '5px',
+            backgroundColor: '#cccccc',
+            border: '1px solid #b2b2b2',
+            padding: '10px',
+            color: 'white'
           }
         }
       }
     };
 
+    this.loginUsername = React.createRef();
+    this.loginPassword = React.createRef();
+
+    this.registerEmail = React.createRef();
+    this.registerUsername = React.createRef();
+    this.registerPassword = React.createRef();
+    this.registerRePassword = React.createRef();
+
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.login = this.login.bind(this);
   }
 
-  handleOpenModal () {
+  handleOpenModal() {
     this.setState({showModal: true});
   }
 
-  handleCloseModal () {
+  handleCloseModal() {
     this.setState({showModal: false});
+  }
+
+  login() {
+    let username = this.loginUsername.current.value;
+    let password = this.loginPassword.current.value;
+    console.log('Username: ' + username + ' Password: ' + password);
+  }
+
+  register() {
+    let email = this.registerEmail.current.value;
+    let username = this.registerUsername.current.value;
+    let password = this.registerPassword.current.value;
+    let repassword = this.registerRePassword.current.value;
   }
 
   render () {
@@ -81,8 +111,9 @@ export default class LoginModal extends React.Component {
 
           <div style={this.state.styles.login.fields}>
             <h2 style={this.state.styles.login.title}>Log In</h2>
-            <input type="text" placeholder="Username" style={this.state.styles.login.username}/>
-            <input type="text" placeholder="Password" style={this.state.styles.login.password}/>
+            <input type="text" placeholder="Username" style={this.state.styles.login.username} ref={this.loginUsername}/>
+            <input type="password" placeholder="Password" style={this.state.styles.login.password} ref={this.loginPassword}/>
+            <button onClick={this.login} style={this.state.styles.login.login}>Log in</button>
           </div>
         </Modal>
       </div>
