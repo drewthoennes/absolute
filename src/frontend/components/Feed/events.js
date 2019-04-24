@@ -41,11 +41,31 @@ let events = {
   },
   demandPayment: {
     req:{
-      getTimeElapsed: 30
+      getTimeElapsed: 30 //Currently obsolete
+    },
+    interval:{
+      time: 300
     },
     action: () => {
-      //store.dispatch(addLine("testing", getTimeElapsed()));
-      //store.dispatch(addLine("your doom is here", getTimeElapsed()));
+
+
+      store.dispatch(addLine("Twightlight is falling.", getTimeElapsed()));
+      let random = Math.floor(Math.random() * 3);
+      store.dispatch(addLine(random, getTimeElapsed() + 1));
+      if(random == 0){
+        store.dispatch(addLine("A chill runs down your spine.", getTimeElapsed() + 10));
+      }else if (random == 1){
+        store.dispatch(addLine("Your fingers start to go numb.", getTimeElapsed() + 14));
+      }else if (random == 2){
+        store.dispatch(addLine("You hear the bleating of lambs in the distance", getTimeElapsed() + 6));
+        
+      //}else if (random == 3){
+      //  store.dispatch(addLine("The fire suddenly goes out", getTimeElapsed + 4));
+          //Todo: Build Dis_Fire method to disable the fire.  
+      //}
+      store.dispatch(addLine("The strange figure approaches", getTimeElapsed() + 30));
+      
+      //store.dispatch(addLine("The strange figure approaches", getTimeElapsed() + 20));
       //store.dispatch(addLine("you don't scare me!" + getTimeElapsed(), getTimeElapsed() + 2));
       
       store.dispatch(enableStonyPath());
@@ -89,7 +109,7 @@ function tick() {
     lastTime = -1;
   }
 
-  if (getTimeElapsed()%6 == 0 && !events.demandPayment.done) {
+  if (getTimeElapsed()%events.demandPayment.interval.time == events.demandPayment.interval.time - 1 && !events.demandPayment.done) {
     events.demandPayment.action();
     events.demandPayment.done = true;
     lastTime = getTimeElapsed();
