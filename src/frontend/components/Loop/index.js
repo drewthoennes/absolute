@@ -19,14 +19,25 @@ export default class Loop extends React.Component {
 
     this.state = {
       running: true,
-      delta: c.delta
+      delta: c.delta,
+      loggedIn: false
     }
 
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.tick = this.tick.bind(this);
   }
 
   componentDidMount() {
     setInterval(this.tick, this.state.delta);
+  }
+
+  handleLogin() {
+    this.setState({loggedIn: true});
+  }
+
+  handleLogout() {
+    this.setState({loggedIn: false});
   }
 
   tick() {
@@ -40,7 +51,7 @@ export default class Loop extends React.Component {
     // Stub to save the game state
     elapsed -= c.delta;
     if (elapsed <= 0) {
-      saveGameState();
+      saveGameState(this.state.loggedIn);
       elapsed = c.saveFreq;
     }
   }

@@ -71,13 +71,12 @@ else {
 }
 
 const inventory = (state = initialState, action) => {
-  //console.log("Action: " + action.type);
   switch (action.type) {
     case GET_WOOD:
       return state.wood.quantity
 
     case INC_WOOD:
-    
+
       if (!action.val) {
         return Object.assign({}, state, {
           wood: {

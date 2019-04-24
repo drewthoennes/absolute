@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import axios from 'axios';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import './styles.scss';
@@ -12,6 +13,7 @@ export default class LoginModal extends React.Component {
 
     this.state = {
       showModal: false,
+      loginError: '',
       styles: {
         modal: {
           content : {
@@ -54,6 +56,12 @@ export default class LoginModal extends React.Component {
             marginBottom: '5px',
             fontSize: '12px'
           },
+          error: {
+            color: 'red',
+            margin: '0px',
+            textAlign: 'center',
+            fontSize: '14px'
+          },
           login: {
             marginTop: '5px',
             backgroundColor: '#cccccc',
@@ -75,6 +83,7 @@ export default class LoginModal extends React.Component {
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleKeyDownLogin = this.handleKeyDownLogin.bind(this);
     this.login = this.login.bind(this);
   }
 
@@ -86,10 +95,37 @@ export default class LoginModal extends React.Component {
     this.setState({showModal: false});
   }
 
+  handleKeyDownLogin(event) {
+    if (event.key === 'Enter') {
+      this.login();
+    }
+  }
+
   login() {
     let username = this.loginUsername.current.value;
     let password = this.loginPassword.current.value;
-    console.log('Username: ' + username + ' Password: ' + password);
+
+    axios.post('/api/auth/login', {
+      username: username,
+      password: password
+    }).then(res => {
+      if (!res.data) {
+        this.setState({loginError: 'There was a problem servicing the request'});
+      }
+      else if (res.data.error) {
+        this.setState({loginError: res.data.error});
+      }
+      else if (!res.data.token) {
+        this.setState({loginError: 'Invalid server response'});
+      }
+      else {
+        localStorage.setItem('token', res.data.token);
+
+        this.props.handleLogin();
+        this.handleCloseModal();
+        this.setState({loginError: ''});
+      }
+    });
   }
 
   register() {
@@ -100,6 +136,10 @@ export default class LoginModal extends React.Component {
   }
 
   render () {
+    let loginError = (
+      <p style={this.state.styles.login.error}>{this.state.loginError}</p>
+    );
+
     return (
       <div>
         <Modal
@@ -111,8 +151,9 @@ export default class LoginModal extends React.Component {
 
           <div style={this.state.styles.login.fields}>
             <h2 style={this.state.styles.login.title}>Log In</h2>
-            <input type="text" placeholder="Username" style={this.state.styles.login.username} ref={this.loginUsername}/>
-            <input type="password" placeholder="Password" style={this.state.styles.login.password} ref={this.loginPassword}/>
+            <input type="text" placeholder="Username" style={this.state.styles.login.username} ref={this.loginUsername} onKeyDown={this.handleKeyDownLogin}/>
+            <input type="password" placeholder="Password" style={this.state.styles.login.password} ref={this.loginPassword} onKeyDown={this.handleKeyDownLogin}/>
+            {loginError}
             <button onClick={this.login} style={this.state.styles.login.login}>Log in</button>
           </div>
         </Modal>

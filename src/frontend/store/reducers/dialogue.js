@@ -40,10 +40,13 @@ const dialogue = (state = initialState, action) => {
         newState.lines[action.time] = arr;
       }
       else {
+<<<<<<< HEAD
         
+=======
+>>>>>>> e96e877e90406d7ce2385accec970c30365d2f3e
         newState.lines[action.time].push(action.line);
-        
       }
+
       return newState;
 
     case DELETE_LINES:

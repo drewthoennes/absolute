@@ -11,7 +11,11 @@ export default class Game extends React.Component {
     super();
 
     this.openLoginModal = this.openLoginModal.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
 
+    this.loop = React.createRef();
+    this.bottomBar = React.createRef();
     this.loginModal = React.createRef();
 
     this.state = {
@@ -22,16 +26,25 @@ export default class Game extends React.Component {
     this.loginModal.current.handleOpenModal();
   }
 
+  handleLogin() {
+    this.loop.current.handleLogin();
+    this.bottomBar.current.handleLogin();
+  }
+
+  handleLogout() {
+    this.loop.current.handleLogout();
+  }
+
   render() {
     return (
       <div className="full">
         <div id="loop-container">
-          <Loop/>
+          <Loop ref={this.loop}/>
         </div>
         <div id="bottom-bar-container">
-          <BottomBar openLoginModal={this.openLoginModal}/>
+          <BottomBar ref={this.bottomBar} openLoginModal={this.openLoginModal} handleLogout={this.handleLogout}/>
         </div>
-        <LoginModal ref={this.loginModal}/>
+        <LoginModal ref={this.loginModal} handleLogin={this.handleLogin}/>
       </div>
     );
   }
