@@ -1,0 +1,22 @@
+#bottom-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  p {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  p:first-child {
+    padding-left: 0px;
+  }
+  p:last-child {
+    padding-right: 0px;
+  }
+}
+
+.full {
+  height: 100%;
+}

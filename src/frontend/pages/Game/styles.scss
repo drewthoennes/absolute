@@ -6,6 +6,21 @@ html, body {
   height: 100%;
 }
 
+#loop-container {
+  height: 95%;
+}
+
+#bottom-bar-container {
+  height: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  p {
+    margin: 0px;
+  }
+}
+
 .full {
   height: 100%;
 }

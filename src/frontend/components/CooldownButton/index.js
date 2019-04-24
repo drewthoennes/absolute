@@ -92,13 +92,15 @@ export default class CooldownButton extends React.Component {
   }
 
   render() {
-    let enabled = this.state.buttonClass;
+    let buttonClass = this.state.buttonClass;
     if (!this.props.enabled) {
-      enabled = 'cooldown-disabled';
+      buttonClass = 'cooldown-disabled';
     }
 
+    let ingredients = this.props.enabled ? 'has-ingredients' : 'no-ingredients';
+
     return (
-      <div tooltip={this.props.tooltip == "" ? undefined : this.props.tooltip} className={"cooldown-button " + enabled} onClick={() => this.cooldownClicked()}>
+      <div tooltip={this.props.tooltip == "" ? undefined : this.props.tooltip} className={"cooldown-button " + buttonClass + " " + ingredients} onClick={() => this.cooldownClicked()}>
         <div className="cooldown-button-text">
           <p>{this.props.text}</p>
         </div>

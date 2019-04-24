@@ -70,14 +70,23 @@ export default class DarkWoods extends React.Component {
 
   render() {
     let woodButton = (
-      <CooldownButton ref={this.gatherWoodButton} cooldown="10000" text="Gather wood" cb={this.gatherWood}/>
+      <CooldownButton
+        ref={this.gatherWoodButton}
+        cooldown="10000"
+        text="Gather wood"
+        cb={this.gatherWood}/>
     );
 
     let fire = this.props.inventory.fire;
     let fireButton;
     if (fire.visible) {
       fireButton = (
-       <CooldownButton ref={this.stoakFireButton} cooldown="8000" text="Stoak fire" tooltip={formatCostTooltip(fire.cost)} enabled={hasInventory(fire.cost)} cb={this.stoakFire}/>
+       <CooldownButton
+        ref={this.stoakFireButton}
+        cooldown="8000" text="Stoak fire"
+        tooltip={formatCostTooltip(fire.cost)}
+        enabled={hasInventory(fire.cost)}
+        cb={this.stoakFire}/>
       );
     }
     else {
@@ -87,8 +96,16 @@ export default class DarkWoods extends React.Component {
     let traps = this.props.inventory.traps;
     let trapButton;
     if (traps.visible) {
+      let trapsEnabled = hasInventory(traps.cost);
+
       trapButton = (
-       <CooldownButton ref={this.makeTrapButton} cooldown="8000" text="Build trap" tooltip={formatCostTooltip(traps.cost)} enabled={hasInventory(traps.cost)} cb={this.makeTrap}/>
+       <CooldownButton
+        ref={this.makeTrapButton}
+        cooldown="8000"
+        text="Build trap"
+        tooltip={formatCostTooltip(traps.cost)}
+        enabled={trapsEnabled}
+        cb={this.makeTrap}/>
       );
     }
     else {
