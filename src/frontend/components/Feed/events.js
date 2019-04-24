@@ -44,10 +44,10 @@ let events = {
       getTimeElapsed: 30
     },
     action: () => {
-      store.dispatch(addLine("testing", getTimeElapsed()));
-      store.dispatch(addLine("your doom is here", getTimeElapsed()));
-      store.dispatch(addLine("you don't scare me!", getTimeElapsed() + 1));
-      store.dispatch(addLine("I here to save you!", getTimeElapsed() + 2));
+      //store.dispatch(addLine("testing", getTimeElapsed()));
+      //store.dispatch(addLine("your doom is here", getTimeElapsed()));
+      //store.dispatch(addLine("you don't scare me!" + getTimeElapsed(), getTimeElapsed() + 2));
+      
       store.dispatch(enableStonyPath());
     }
 
@@ -65,6 +65,7 @@ function ready(inventory, requirements) {
 }
 
 function tick() {
+  
   let inventory = store.getState().inventory;
 
   if (!events.fireEnable.done && ready(inventory, events.fireEnable.req)) {
@@ -81,10 +82,20 @@ function tick() {
     events.stonyPathEnable.action();
     events.stonyPathEnable.done = true;
   }
+  
+  let lastTime;
 
-  if (getTimeElapsed()%6 == 0) {
+  if(!lastTime){
+    lastTime = -1;
+  }
+
+  if (getTimeElapsed()%6 == 0 && !events.demandPayment.done) {
     events.demandPayment.action();
     events.demandPayment.done = true;
+    lastTime = getTimeElapsed();
+    events.demandPayment.done = true;
+  }else if(lastTime != getTimeElapsed()){
+    events.demandPayment.done = false;
   }
 
 }

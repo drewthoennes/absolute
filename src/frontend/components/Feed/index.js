@@ -43,7 +43,7 @@ export default class Feed extends React.Component {
     }
 
     let lines = this.getLines(time);
-
+    
     if (lines) {
 
       let concat = this.state.lines.reverse().concat(lines).reverse();
