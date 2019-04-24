@@ -69,6 +69,15 @@ let events = {
       //store.dispatch(addLine("you don't scare me!" + getTimeElapsed(), getTimeElapsed() + 2));
     }
 
+  },
+  takePayment: {
+    interval:{
+      time: 300//same a interval.time for demandpayment
+    }, 
+    action: () => {
+      store.dispatch(addLine("Twightlight is falling.", getTimeElapsed()));
+    }
+
   }
 }
 
@@ -107,7 +116,7 @@ function tick() {
     lastTime = -1;
   }
 
-  if (getTimeElapsed()%events.demandPayment.interval.time == events.demandPayment.interval.time - 1 && !events.demandPayment.done) {
+  if (getTimeElapsed()%events.demandPayment.interval.time == events.demandPayment.interval.time - 40 && !events.demandPayment.done) {
     events.demandPayment.action();
     events.demandPayment.done = true;
     lastTime = getTimeElapsed();

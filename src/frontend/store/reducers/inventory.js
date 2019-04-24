@@ -60,8 +60,8 @@ const defaultState = {
     visible: false
   },
   gold: {
-    quantity: 0,
-    visible: false
+    quantity: 10,
+    visible: true
   }
 }
 
