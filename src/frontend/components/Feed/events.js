@@ -5,7 +5,8 @@ import {
   enableFire,
   enableTraps,
   enableStonyPath,
-  demandPayment
+  demandPayment,
+  enableTradePost
 } from '@/store/actions';
 import { decGold } from '../../store/actions/inventory';
 
@@ -50,7 +51,17 @@ let events = {
       store.dispatch(enableStonyPath());
     }
   },
-  
+  tradePostEnable: {
+    req: {
+      fire: 1,
+      wood: 20
+    },
+    action: () => {
+      let line = 'You discover a small path not far from the clearing.';
+      store.dispatch(addLine(line, getTimeElapsed()));
+      store.dispatch(enableTradePost());
+    }
+  },
   demandPayment: {
     req:{
       getTimeElapsed: 30 //Currently obsolete
@@ -97,6 +108,10 @@ let events = {
       if(store.getState().inventory.gold.quantity >= payment){
         store.dispatch(decGold(payment));
       }else{
+        //store.dispatch(decGold(store.getState().interval.gold.quantity))
+        //store.dispatch(decGold(store.getState().interval.furs.quantity))
+        //store.dispatch(decGold(store.getState().interval.wood.quantity))
+        //store.dispatch(decGold(store.getState().interval.gold.quantity))
         console.log("you die");
       }
       
@@ -132,6 +147,11 @@ function tick() {
   if (!events.stonyPathEnable.done && ready(inventory, events.stonyPathEnable.req)) {
     events.stonyPathEnable.action();
     events.stonyPathEnable.done = true;
+  }
+
+  if (!events.tradePostEnable.done && ready(inventory, events.tradePostEnable.req)) {
+    events.tradePostEnable.action();
+    events.tradePostEnable.done = true;
   }
 
   let lastTime;

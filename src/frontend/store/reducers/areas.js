@@ -25,7 +25,7 @@ let defaultState = {
     time: ''
   },
   tradePost: {
-    enabled: true,
+    enabled: false,
     state: {},
     time: ''
   }
