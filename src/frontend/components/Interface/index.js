@@ -4,7 +4,7 @@ import './styles.scss';
 import c from '@/const';
 import {log} from '@/utils';
 import store from '@/store';
-import {updateDarkWoods} from '@/store/actions';
+import {updateDarkWoods, updateStonyPath} from '@/store/actions';
 
 import CooldownButton from '@/components/CooldownButton';
 import DarkWoods from '@/components/Interface/DarkWoods'
@@ -51,7 +51,7 @@ export default class Interface extends React.Component {
       store.dispatch(updateDarkWoods(this.state.data));
     }
     else if (this.state.area == 'Stony Path') {
-      // Update Stony Path
+      store.dispatch(updateStonyPath(this.state.data));
     }
     else if (this.state.area == 'Abandoned Mine') {
       // Update Abandoned Mine
@@ -65,7 +65,7 @@ export default class Interface extends React.Component {
         this.darkWoods.current.init(store.getState().areas.darkWoods);
       }
       else if (this.state.area == 'Stony Path') {
-        // Update Stony Path
+        this.stonyPath.current.init(store.getState().areas.stonyPath);
       }
       else if (this.state.area == 'Abandoned Mine') {
         // Update Abandoned Mine

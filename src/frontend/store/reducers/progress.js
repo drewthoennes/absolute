@@ -11,13 +11,14 @@ export default class progress {
 
   load() {
     return (state = this.initialState, action) => {
+      let now = new Date().getTime();
       switch (action.type) {
         case SET_PROGRESS:
           // return action.store;
+          action.store.start = now - (action.store.end - action.store.end);
           return action.store;
 
         case GET_TIME:
-          let now = new Date().getTime();
           return state.start - now;
 
         default:

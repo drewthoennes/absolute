@@ -31,21 +31,23 @@ export default class Loop extends React.Component {
     this.setState({loggedIn: false});
     localStorage.removeItem('token');
     localStorage.removeItem('gameState');
+    localStorage.removeItem('username');
     window.location.reload();
     // this.props.handleLogout();
   }
 
   render() {
-    // Buttons: Logout, Erase, Dark, Jalapeño, *Saved*, ...
+    // Buttons: Erase, Dark, Jalapeño, *Saved*, ...
     let auth;
     if (this.state.loggedIn) {
+      let username = localStorage.getItem('username');
       auth = (
-        <p onClick={this.handleLogout}>Log out</p>
+        <p className="bottom-button tooltip-top" tooltip={username} onClick={this.handleLogout}>Log out</p>
       );
     }
     else {
       auth = (
-        <p onClick={this.openLoginModal}>Log in</p>
+        <p className="bottom-button" onClick={this.openLoginModal}>Log in</p>
       );
     }
 

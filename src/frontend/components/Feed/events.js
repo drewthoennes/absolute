@@ -67,8 +67,6 @@ let events = {
       
       //store.dispatch(addLine("The strange figure approaches", getTimeElapsed() + 20));
       //store.dispatch(addLine("you don't scare me!" + getTimeElapsed(), getTimeElapsed() + 2));
-      
-      store.dispatch(enableStonyPath());
     }
 
   }
@@ -85,7 +83,7 @@ function ready(inventory, requirements) {
 }
 
 function tick() {
-  
+
   let inventory = store.getState().inventory;
 
   if (!events.fireEnable.done && ready(inventory, events.fireEnable.req)) {
@@ -102,7 +100,7 @@ function tick() {
     events.stonyPathEnable.action();
     events.stonyPathEnable.done = true;
   }
-  
+
   let lastTime;
 
   if(!lastTime){

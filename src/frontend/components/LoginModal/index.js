@@ -128,6 +128,8 @@ export default class LoginModal extends React.Component {
       else {
         // Get game
         let token = res.data.token;
+        let username = res.data.username;
+        
         axios.get('/api/game', {
           headers: {
             Authorization: 'Bearer ' + res.data.token
@@ -152,12 +154,14 @@ export default class LoginModal extends React.Component {
             Promise.all(promises); // Can't resolve this for some reason, so we risk it for the biscuit
 
             localStorage.setItem('token', token);
+            localStorage.setItem('username', username);
             this.props.handleLogin();
             this.handleCloseModal();
             this.setState({loginError: ''});
           }
           else {
             localStorage.setItem('token', token);
+            localStorage.setItem('username', username);
             this.props.handleLogin();
             this.handleCloseModal();
             this.setState({loginError: ''});

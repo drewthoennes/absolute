@@ -29,15 +29,21 @@ export default class StonyPath extends React.Component {
 
   tick() {
     let state = {
-      checkTrapsButton: this.checkTrapsButton.current ? this.checkTrapsButton.current.tick() : ''
+      checkTrapsButton: this.checkTrapsButton.current ? this.checkTrapsButton.current.tick() : undefined
     };
 
     return state;
   }
 
   init(data) {
+    if (!data.time) {
+      return;
+    }
+
     // Initialize all cooldown buttons to their correct positions
-    this.checkTrapsButton.current.init(data.state.checkTrapsButton, data.time);
+    if (this.checkTrapsButton.current && data.state.checkTrapsButton) {
+      this.checkTrapsButton.current.init(data.state.checkTrapsButton, data.time);
+    }
   }
 
   checkTraps() {
